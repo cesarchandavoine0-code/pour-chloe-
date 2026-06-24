@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pour Chloé ❤️</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff5fa2,#ff8cc8,#ffd1e8);
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+}
+
+h1{
+    color:white;
+    font-size:5rem;
+    text-align:center;
+    text-shadow:0 0 20px rgba(255,255,255,.8);
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+    100%{transform:scale(1);}
+}
+
+.heart{
+    position:absolute;
+    color:white;
+    font-size:30px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px);
+        opacity:1;
+    }
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+<body>
+
+<h1>Je t'aime Chloé ❤️</h1>
+
+<script>
+for(let i=0;i<40;i++){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(3+Math.random()*5)+"s";
+    heart.style.fontSize=(20+Math.random()*30)+"px";
+    document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
