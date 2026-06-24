@@ -14,7 +14,7 @@
 
 body{
     height:100vh;
-    background:linear-gradient(135deg,#2b0015,#5e002f,#8d0046,#b30059);
+    background:linear-gradient(135deg,#ff4d88,#ff80bf,#ffd6e7);
     overflow:hidden;
     font-family:Arial,sans-serif;
     display:flex;
@@ -27,16 +27,16 @@ body{
     text-align:center;
     z-index:2;
     padding:20px;
-    max-width:900px;
+    max-width:800px;
 }
 
 .photo{
-    width:300px;
-    height:300px;
+    width:280px;
+    height:280px;
     border-radius:50%;
     object-fit:cover;
     border:6px solid white;
-    box-shadow:0 0 50px rgba(255,255,255,.8);
+    box-shadow:0 0 40px rgba(255,255,255,0.9);
     animation:float 4s ease-in-out infinite;
 }
 
@@ -44,49 +44,58 @@ h1{
     color:white;
     font-size:4rem;
     margin-top:20px;
-    text-shadow:0 0 20px rgba(255,255,255,.9);
+    text-shadow:0 0 20px rgba(255,255,255,.8);
+    animation:pulse 2s infinite;
 }
 
 p{
     color:white;
-    font-size:1.3rem;
-    margin-top:15px;
-}
-
-.buttons{
-    margin-top:30px;
+    font-size:1.4rem;
+    margin-top:20px;
+    text-shadow:0 0 10px rgba(255,255,255,.6);
 }
 
 button{
-    margin:10px;
-    padding:15px 30px;
+    margin-top:30px;
+    padding:15px 35px;
     border:none;
     border-radius:30px;
     background:white;
-    color:#8d0046;
-    font-size:1rem;
+    color:#ff4d88;
+    font-size:1.1rem;
     font-weight:bold;
     cursor:pointer;
-    transition:.3s;
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(255,255,255,.5);
 }
 
 button:hover{
-    transform:scale(1.08);
+    transform:scale(1.1);
 }
 
 .message{
-    margin-top:30px;
+    margin-top:25px;
     color:white;
-    font-size:1.6rem;
-    min-height:60px;
-    padding:10px;
+    font-size:1.2rem;
+    opacity:0;
+    transition:1s;
+}
+
+.show{
+    opacity:1;
 }
 
 .heart{
     position:absolute;
-    color:#ffd1dc;
+    color:white;
     animation:fall linear infinite;
     user-select:none;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+    100%{transform:scale(1);}
 }
 
 @keyframes float{
@@ -110,92 +119,46 @@ button:hover{
 <body>
 
 <div class="container">
-
     <img id="slideshow" src="photo1.png" class="photo" alt="Photo">
 
     <h1>Je t'aime Chloé ❤️</h1>
 
-    <p>Chaque instant avec toi est précieux.</p>
+    <p>Chaque moment avec toi est un souvenir que je garde précieusement.</p>
 
-    <div class="buttons">
-        <button id="musicBtn">Lancer la musique 🎵</button>
-        <button id="loveBtn">Mots d'amour ❤️</button>
-    </div>
+    <button onclick="startExperience()">Clique ici 💌</button>
 
     <div class="message" id="message">
-        Clique sur un bouton ❤️
+        Merci d’être dans ma vie ❤️
     </div>
-
 </div>
 
-<audio id="music" preload="auto" loop>
+<audio id="music" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+function startExperience(){
+    document.getElementById("music").play();
+    document.getElementById("message").classList.add("show");
+}
 
-    const music = document.getElementById("music");
-    const musicBtn = document.getElementById("musicBtn");
-    const loveBtn = document.getElementById("loveBtn");
-    const message = document.getElementById("message");
-    const slideshow = document.getElementById("slideshow");
+const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
+let currentPhoto = 0;
 
-    const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
-    let currentPhoto = 0;
+setInterval(() => {
+    currentPhoto = (currentPhoto + 1) % photos.length;
+    document.getElementById("slideshow").src = photos[currentPhoto];
+}, 3000);
 
-    setInterval(() => {
-        currentPhoto = (currentPhoto + 1) % photos.length;
-        slideshow.src = photos[currentPhoto];
-    }, 3000);
-
-    musicBtn.addEventListener("click", () => {
-        music.play()
-        .then(() => {
-            message.innerText = "La musique joue pour toi ❤️";
-        })
-        .catch(err => {
-            console.log(err);
-            message.innerText = "Impossible de lancer la musique.";
-        });
-    });
-
-    const loveMessages = [
-        "Je t'aime ❤️",
-        "Tu es la meilleure ❤️",
-        "Tu es mon bonheur ❤️",
-        "Tu es mon rayon de soleil ☀️",
-        "Mon cœur est à toi ❤️",
-        "Tu rends ma vie plus belle ❤️",
-        "Je pense à toi ❤️",
-        "Tu es unique ❤️",
-        "Avec toi tout est mieux ❤️"
-    ];
-
-    let loveInterval = null;
-
-    loveBtn.addEventListener("click", () => {
-        if(loveInterval !== null) return;
-
-        loveInterval = setInterval(() => {
-            const randomMessage =
-                loveMessages[Math.floor(Math.random() * loveMessages.length)];
-
-            message.innerText = randomMessage;
-        }, 2000);
-    });
-
-    for(let i=0;i<80;i++){
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤";
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.animationDuration = (3 + Math.random()*7) + "s";
-        heart.style.fontSize = (15 + Math.random()*35) + "px";
-        document.body.appendChild(heart);
-    }
-
-});
+for(let i=0;i<70;i++){
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (3 + Math.random()*6) + "s";
+    heart.style.fontSize = (15 + Math.random()*35) + "px";
+    document.body.appendChild(heart);
+}
 </script>
 
 </body>
