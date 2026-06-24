@@ -6,36 +6,101 @@
 <title>Pour Chloé ❤️</title>
 
 <style>
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
     height:100vh;
+    background:linear-gradient(135deg,#ff4d88,#ff80bf,#ffd6e7);
+    overflow:hidden;
+    font-family:Arial,sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(135deg,#ff5fa2,#ff8cc8,#ffd1e8);
-    overflow:hidden;
-    font-family:Arial, sans-serif;
+    position:relative;
+}
+
+.container{
+    text-align:center;
+    z-index:2;
+    padding:20px;
+}
+
+.photo{
+    width:280px;
+    height:280px;
+    border-radius:50%;
+    object-fit:cover;
+    border:6px solid white;
+    box-shadow:0 0 40px rgba(255,255,255,0.9);
+    animation:float 4s ease-in-out infinite;
 }
 
 h1{
     color:white;
-    font-size:5rem;
-    text-align:center;
+    font-size:4rem;
+    margin-top:20px;
     text-shadow:0 0 20px rgba(255,255,255,.8);
     animation:pulse 2s infinite;
 }
 
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.15);}
-    100%{transform:scale(1);}
+p{
+    color:white;
+    font-size:1.4rem;
+    margin-top:20px;
+    text-shadow:0 0 10px rgba(255,255,255,.6);
+}
+
+button{
+    margin-top:30px;
+    padding:15px 35px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#ff4d88;
+    font-size:1.1rem;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 20px rgba(255,255,255,.5);
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+.message{
+    margin-top:25px;
+    color:white;
+    font-size:1.2rem;
+    opacity:0;
+    transition:1s;
+}
+
+.show{
+    opacity:1;
 }
 
 .heart{
     position:absolute;
     color:white;
-    font-size:30px;
     animation:fall linear infinite;
+    user-select:none;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+    100%{transform:scale(1);}
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-15px);}
+    100%{transform:translateY(0);}
 }
 
 @keyframes fall{
@@ -52,16 +117,37 @@ h1{
 </head>
 <body>
 
-<h1>Je t'aime Chloé ❤️</h1>
+<div class="container">
+    <img src="photo.jpg" class="photo" alt="Photo">
+
+    <h1>Je t'aime Chloé ❤️</h1>
+
+    <p>Chaque moment avec toi est un souvenir que je garde précieusement.</p>
+
+    <button onclick="startExperience()">Clique ici 💌</button>
+
+    <div class="message" id="message">
+        Merci d’être dans ma vie ❤️
+    </div>
+</div>
+
+<audio id="music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-for(let i=0;i<40;i++){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(3+Math.random()*5)+"s";
-    heart.style.fontSize=(20+Math.random()*30)+"px";
+function startExperience(){
+    document.getElementById("music").play();
+    document.getElementById("message").classList.add("show");
+}
+
+for(let i=0;i<70;i++){
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (3 + Math.random()*6) + "s";
+    heart.style.fontSize = (15 + Math.random()*35) + "px";
     document.body.appendChild(heart);
 }
 </script>
