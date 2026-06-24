@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -120,33 +120,33 @@ button:hover{
         Merci d'être dans ma vie ❤️
     </div>
 </div>
- 
+
 <!-- Mets ton fichier music.mp3 dans le même dossier que ce fichier HTML -->
 <audio id="music" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
     <source src="music.ogg" type="audio/ogg">
 </audio>
- 
+
 <script>
 let musicStarted = false;
- 
+
 function startExperience() {
     const music = document.getElementById("music");
     const statusEl = document.getElementById("music-status");
     const btn = document.getElementById("mainBtn");
- 
+
     // Affiche le message
     document.getElementById("message").classList.add("show");
- 
+
     // Change le bouton
     btn.textContent = "❤️";
     btn.style.fontSize = "1.8rem";
     btn.style.padding = "12px 25px";
- 
+
     if (musicStarted) return;
- 
+
     const playPromise = music.play();
- 
+
     if (playPromise !== undefined) {
         playPromise
             .then(() => {
@@ -161,12 +161,12 @@ function startExperience() {
             });
     }
 }
- 
+
 function retryMusic() {
     const music = document.getElementById("music");
     const statusEl = document.getElementById("music-status");
     const btn = document.getElementById("mainBtn");
- 
+
     music.play()
         .then(() => {
             musicStarted = true;
@@ -178,7 +178,7 @@ function retryMusic() {
             statusEl.textContent = "⚠️ Autorise le son dans ton navigateur.";
         });
 }
- 
+
 // Slideshow photos
 const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
 let currentPhoto = 0;
@@ -192,7 +192,7 @@ setInterval(() => {
         img.style.opacity = "1";
     }, 500);
 }, 3000);
- 
+
 // Coeurs qui tombent
 for (let i = 0; i < 70; i++) {
     let heart = document.createElement("div");
