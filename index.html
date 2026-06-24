@@ -1,17 +1,15 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pour Chloé ❤️</title>
-
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
-
 body{
     height:100vh;
     background:linear-gradient(135deg,#ff4d88,#ff80bf,#ffd6e7);
@@ -22,14 +20,12 @@ body{
     align-items:center;
     position:relative;
 }
-
 .container{
     text-align:center;
     z-index:2;
     padding:20px;
     max-width:800px;
 }
-
 .photo{
     width:280px;
     height:280px;
@@ -39,7 +35,6 @@ body{
     box-shadow:0 0 40px rgba(255,255,255,0.9);
     animation:float 4s ease-in-out infinite;
 }
-
 h1{
     color:white;
     font-size:4rem;
@@ -47,14 +42,12 @@ h1{
     text-shadow:0 0 20px rgba(255,255,255,.8);
     animation:pulse 2s infinite;
 }
-
 p{
     color:white;
     font-size:1.4rem;
     margin-top:20px;
     text-shadow:0 0 10px rgba(255,255,255,.6);
 }
-
 button{
     margin-top:30px;
     padding:15px 35px;
@@ -68,11 +61,9 @@ button{
     transition:0.3s;
     box-shadow:0 0 20px rgba(255,255,255,.5);
 }
-
 button:hover{
     transform:scale(1.1);
 }
-
 .message{
     margin-top:25px;
     color:white;
@@ -80,86 +71,141 @@ button:hover{
     opacity:0;
     transition:1s;
 }
-
 .show{
     opacity:1;
 }
-
 .heart{
     position:absolute;
     color:white;
     animation:fall linear infinite;
     user-select:none;
+    pointer-events:none;
 }
-
+#music-status {
+    margin-top: 10px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.85rem;
+    min-height: 20px;
+}
 @keyframes pulse{
     0%{transform:scale(1);}
     50%{transform:scale(1.08);}
     100%{transform:scale(1);}
 }
-
 @keyframes float{
     0%{transform:translateY(0);}
     50%{transform:translateY(-15px);}
     100%{transform:translateY(0);}
 }
-
 @keyframes fall{
     from{
-        transform:translateY(-100px);
+        transform:translateY(-100px) rotate(0deg);
         opacity:1;
     }
     to{
-        transform:translateY(110vh);
+        transform:translateY(110vh) rotate(20deg);
         opacity:0;
     }
 }
 </style>
 </head>
 <body>
-
 <div class="container">
     <img id="slideshow" src="photo1.png" class="photo" alt="Photo">
-
     <h1>Je t'aime Chloé ❤️</h1>
-
     <p>Chaque moment avec toi est un souvenir que je garde précieusement.</p>
-
-    <button onclick="startExperience()">Clique ici 💌</button>
-
+    <button id="mainBtn" onclick="startExperience()">Clique ici 💌</button>
+    <div id="music-status"></div>
     <div class="message" id="message">
-        Merci d’être dans ma vie ❤️
+        Merci d'être dans ma vie ❤️
     </div>
 </div>
-
-<audio id="music" loop>
+ 
+<!-- Mets ton fichier music.mp3 dans le même dossier que ce fichier HTML -->
+<audio id="music" loop preload="auto">
     <source src="music.mp3" type="audio/mpeg">
+    <source src="music.ogg" type="audio/ogg">
 </audio>
-
+ 
 <script>
-function startExperience(){
-    document.getElementById("music").play();
+let musicStarted = false;
+ 
+function startExperience() {
+    const music = document.getElementById("music");
+    const statusEl = document.getElementById("music-status");
+    const btn = document.getElementById("mainBtn");
+ 
+    // Affiche le message
     document.getElementById("message").classList.add("show");
+ 
+    // Change le bouton
+    btn.textContent = "❤️";
+    btn.style.fontSize = "1.8rem";
+    btn.style.padding = "12px 25px";
+ 
+    if (musicStarted) return;
+ 
+    const playPromise = music.play();
+ 
+    if (playPromise !== undefined) {
+        playPromise
+            .then(() => {
+                musicStarted = true;
+                statusEl.textContent = "";
+            })
+            .catch(error => {
+                console.warn("Lecture audio bloquée :", error);
+                statusEl.textContent = "🔇 Clique encore pour lancer la musique";
+                // Deuxième tentative au prochain clic utilisateur
+                btn.onclick = retryMusic;
+            });
+    }
 }
-
+ 
+function retryMusic() {
+    const music = document.getElementById("music");
+    const statusEl = document.getElementById("music-status");
+    const btn = document.getElementById("mainBtn");
+ 
+    music.play()
+        .then(() => {
+            musicStarted = true;
+            statusEl.textContent = "";
+            btn.onclick = startExperience;
+        })
+        .catch(err => {
+            console.warn("Toujours bloqué :", err);
+            statusEl.textContent = "⚠️ Autorise le son dans ton navigateur.";
+        });
+}
+ 
+// Slideshow photos
 const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
 let currentPhoto = 0;
-
 setInterval(() => {
     currentPhoto = (currentPhoto + 1) % photos.length;
-    document.getElementById("slideshow").src = photos[currentPhoto];
+    const img = document.getElementById("slideshow");
+    img.style.opacity = "0";
+    img.style.transition = "opacity 0.5s";
+    setTimeout(() => {
+        img.src = photos[currentPhoto];
+        img.style.opacity = "1";
+    }, 500);
 }, 3000);
-
-for(let i=0;i<70;i++){
+ 
+// Coeurs qui tombent
+for (let i = 0; i < 70; i++) {
     let heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.animationDuration = (3 + Math.random()*6) + "s";
-    heart.style.fontSize = (15 + Math.random()*35) + "px";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "-50px";
+    heart.style.animationDuration = (3 + Math.random() * 6) + "s";
+    heart.style.animationDelay = (Math.random() * 8) + "s";
+    heart.style.fontSize = (15 + Math.random() * 35) + "px";
+    heart.style.opacity = (0.4 + Math.random() * 0.6).toString();
     document.body.appendChild(heart);
 }
 </script>
-
 </body>
 </html>
