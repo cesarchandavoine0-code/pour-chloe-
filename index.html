@@ -14,7 +14,7 @@
 
 body{
     height:100vh;
-    background:linear-gradient(135deg,#ff4d88,#ff80bf,#ffd6e7);
+    background:linear-gradient(135deg,#3b001f,#6d0038,#a1004f,#d10066);
     overflow:hidden;
     font-family:Arial,sans-serif;
     display:flex;
@@ -27,16 +27,16 @@ body{
     text-align:center;
     z-index:2;
     padding:20px;
-    max-width:800px;
+    max-width:900px;
 }
 
 .photo{
-    width:280px;
-    height:280px;
+    width:300px;
+    height:300px;
     border-radius:50%;
     object-fit:cover;
     border:6px solid white;
-    box-shadow:0 0 40px rgba(255,255,255,0.9);
+    box-shadow:0 0 50px rgba(255,255,255,0.8);
     animation:float 4s ease-in-out infinite;
 }
 
@@ -44,7 +44,7 @@ h1{
     color:white;
     font-size:4rem;
     margin-top:20px;
-    text-shadow:0 0 20px rgba(255,255,255,.8);
+    text-shadow:0 0 25px rgba(255,255,255,.9);
     animation:pulse 2s infinite;
 }
 
@@ -52,21 +52,23 @@ p{
     color:white;
     font-size:1.4rem;
     margin-top:20px;
-    text-shadow:0 0 10px rgba(255,255,255,.6);
+}
+
+.buttons{
+    margin-top:30px;
 }
 
 button{
-    margin-top:30px;
-    padding:15px 35px;
+    margin:10px;
+    padding:15px 30px;
     border:none;
     border-radius:30px;
     background:white;
-    color:#ff4d88;
-    font-size:1.1rem;
+    color:#8b0047;
+    font-size:1rem;
     font-weight:bold;
     cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 0 20px rgba(255,255,255,.5);
+    transition:.3s;
 }
 
 button:hover{
@@ -74,9 +76,10 @@ button:hover{
 }
 
 .message{
-    margin-top:25px;
+    margin-top:30px;
     color:white;
-    font-size:1.2rem;
+    font-size:1.6rem;
+    min-height:50px;
     opacity:0;
     transition:1s;
 }
@@ -87,7 +90,7 @@ button:hover{
 
 .heart{
     position:absolute;
-    color:white;
+    color:#ffd1dc;
     animation:fall linear infinite;
     user-select:none;
 }
@@ -119,30 +122,28 @@ button:hover{
 <body>
 
 <div class="container">
+
     <img id="slideshow" src="photo1.png" class="photo" alt="Photo">
 
     <h1>Je t'aime Chloé ❤️</h1>
 
-    <p>Chaque moment avec toi est un souvenir que je garde précieusement.</p>
+    <p>Chaque instant avec toi est précieux.</p>
 
-    <button onclick="startExperience()">Clique ici 💌</button>
-
-    <div class="message" id="message">
-        Merci d’être dans ma vie ❤️
+    <div class="buttons">
+        <button onclick="startExperience()">Lancer la musique 🎵</button>
+        <button onclick="startLoveGenerator()">Mots d'amour ❤️</button>
     </div>
+
+    <div class="message" id="message"></div>
+
 </div>
 
-<audio id="music" loop>
+<audio id="music" preload="auto" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function startExperience(){
-    document.getElementById("music").play();
-    document.getElementById("message").classList.add("show");
-}
-
-const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
+const photos = ["photo1.png","photo2.jpg","photo3.jpg"];
 let currentPhoto = 0;
 
 setInterval(() => {
@@ -150,16 +151,65 @@ setInterval(() => {
     document.getElementById("slideshow").src = photos[currentPhoto];
 }, 3000);
 
-for(let i=0;i<70;i++){
+function startExperience(){
+    const music = document.getElementById("music");
+    music.load();
+
+    music.play().then(() => {
+        console.log("Musique démarrée");
+    }).catch(err => {
+        console.log("Erreur audio :", err);
+    });
+
+    document.getElementById("message").innerText =
+    "Merci d'être dans ma vie ❤️";
+    document.getElementById("message").classList.add("show");
+}
+
+const loveMessages = [
+    "Je t'aime ❤️",
+    "Tu es la meilleure ❤️",
+    "Tu es mon bonheur ❤️",
+    "Tu es mon rayon de soleil ☀️",
+    "Mon cœur est à toi ❤️",
+    "Tu rends ma vie plus belle ❤️",
+    "Je pense à toi tout le temps ❤️",
+    "Tu es unique ❤️",
+    "Avec toi tout est mieux ❤️",
+    "Tu comptes énormément pour moi ❤️"
+    "nooblarde"
+    "gros bbl mdrrr"
+    "les hauts et les bas dans la vie"
+    "merci ma cherieeeeeee"
+];
+
+let loveInterval = null;
+
+function startLoveGenerator(){
+    const message = document.getElementById("message");
+    message.classList.add("show");
+
+    if(loveInterval) return;
+
+    loveInterval = setInterval(() => {
+        let randomText =
+        loveMessages[Math.floor(Math.random()*loveMessages.length)];
+
+        message.innerText = randomText;
+    }, 2000);
+}
+
+for(let i=0;i<80;i++){
     let heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤";
     heart.style.left = Math.random()*100 + "vw";
-    heart.style.animationDuration = (3 + Math.random()*6) + "s";
+    heart.style.animationDuration = (3 + Math.random()*7) + "s";
     heart.style.fontSize = (15 + Math.random()*35) + "px";
     document.body.appendChild(heart);
 }
 </script>
 
 </body>
+</html>
 </html>
