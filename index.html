@@ -14,7 +14,7 @@
 
 body{
     height:100vh;
-    background:linear-gradient(135deg,#3b001f,#6d0038,#a1004f,#d10066);
+    background:linear-gradient(135deg,#2b0015,#5e002f,#8d0046,#b30059);
     overflow:hidden;
     font-family:Arial,sans-serif;
     display:flex;
@@ -36,7 +36,7 @@ body{
     border-radius:50%;
     object-fit:cover;
     border:6px solid white;
-    box-shadow:0 0 50px rgba(255,255,255,0.8);
+    box-shadow:0 0 50px rgba(255,255,255,.8);
     animation:float 4s ease-in-out infinite;
 }
 
@@ -44,14 +44,13 @@ h1{
     color:white;
     font-size:4rem;
     margin-top:20px;
-    text-shadow:0 0 25px rgba(255,255,255,.9);
-    animation:pulse 2s infinite;
+    text-shadow:0 0 20px rgba(255,255,255,.9);
 }
 
 p{
     color:white;
-    font-size:1.4rem;
-    margin-top:20px;
+    font-size:1.3rem;
+    margin-top:15px;
 }
 
 .buttons{
@@ -64,7 +63,7 @@ button{
     border:none;
     border-radius:30px;
     background:white;
-    color:#8b0047;
+    color:#8d0046;
     font-size:1rem;
     font-weight:bold;
     cursor:pointer;
@@ -72,20 +71,15 @@ button{
 }
 
 button:hover{
-    transform:scale(1.1);
+    transform:scale(1.08);
 }
 
 .message{
     margin-top:30px;
     color:white;
     font-size:1.6rem;
-    min-height:50px;
-    opacity:0;
-    transition:1s;
-}
-
-.show{
-    opacity:1;
+    min-height:60px;
+    padding:10px;
 }
 
 .heart{
@@ -93,12 +87,6 @@ button:hover{
     color:#ffd1dc;
     animation:fall linear infinite;
     user-select:none;
-}
-
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.08);}
-    100%{transform:scale(1);}
 }
 
 @keyframes float{
@@ -130,11 +118,13 @@ button:hover{
     <p>Chaque instant avec toi est précieux.</p>
 
     <div class="buttons">
-        <button onclick="startExperience()">Lancer la musique 🎵</button>
-        <button onclick="startLoveGenerator()">Mots d'amour ❤️</button>
+        <button id="musicBtn">Lancer la musique 🎵</button>
+        <button id="loveBtn">Mots d'amour ❤️</button>
     </div>
 
-    <div class="message" id="message"></div>
+    <div class="message" id="message">
+        Clique sur un bouton ❤️
+    </div>
 
 </div>
 
@@ -143,73 +133,70 @@ button:hover{
 </audio>
 
 <script>
-const photos = ["photo1.png","photo2.jpg","photo3.jpg"];
-let currentPhoto = 0;
+document.addEventListener("DOMContentLoaded", () => {
 
-setInterval(() => {
-    currentPhoto = (currentPhoto + 1) % photos.length;
-    document.getElementById("slideshow").src = photos[currentPhoto];
-}, 3000);
-
-function startExperience(){
     const music = document.getElementById("music");
-    music.load();
+    const musicBtn = document.getElementById("musicBtn");
+    const loveBtn = document.getElementById("loveBtn");
+    const message = document.getElementById("message");
+    const slideshow = document.getElementById("slideshow");
 
-    music.play().then(() => {
-        console.log("Musique démarrée");
-    }).catch(err => {
-        console.log("Erreur audio :", err);
+    const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
+    let currentPhoto = 0;
+
+    setInterval(() => {
+        currentPhoto = (currentPhoto + 1) % photos.length;
+        slideshow.src = photos[currentPhoto];
+    }, 3000);
+
+    musicBtn.addEventListener("click", () => {
+        music.play()
+        .then(() => {
+            message.innerText = "La musique joue pour toi ❤️";
+        })
+        .catch(err => {
+            console.log(err);
+            message.innerText = "Impossible de lancer la musique.";
+        });
     });
 
-    document.getElementById("message").innerText =
-    "Merci d'être dans ma vie ❤️";
-    document.getElementById("message").classList.add("show");
-}
+    const loveMessages = [
+        "Je t'aime ❤️",
+        "Tu es la meilleure ❤️",
+        "Tu es mon bonheur ❤️",
+        "Tu es mon rayon de soleil ☀️",
+        "Mon cœur est à toi ❤️",
+        "Tu rends ma vie plus belle ❤️",
+        "Je pense à toi ❤️",
+        "Tu es unique ❤️",
+        "Avec toi tout est mieux ❤️"
+    ];
 
-const loveMessages = [
-    "Je t'aime ❤️",
-    "Tu es la meilleure ❤️",
-    "Tu es mon bonheur ❤️",
-    "Tu es mon rayon de soleil ☀️",
-    "Mon cœur est à toi ❤️",
-    "Tu rends ma vie plus belle ❤️",
-    "Je pense à toi tout le temps ❤️",
-    "Tu es unique ❤️",
-    "Avec toi tout est mieux ❤️",
-    "Tu comptes énormément pour moi ❤️"
-    "nooblarde"
-    "gros bbl mdrrr"
-    "les hauts et les bas dans la vie"
-    "merci ma cherieeeeeee"
-];
+    let loveInterval = null;
 
-let loveInterval = null;
+    loveBtn.addEventListener("click", () => {
+        if(loveInterval !== null) return;
 
-function startLoveGenerator(){
-    const message = document.getElementById("message");
-    message.classList.add("show");
+        loveInterval = setInterval(() => {
+            const randomMessage =
+                loveMessages[Math.floor(Math.random() * loveMessages.length)];
 
-    if(loveInterval) return;
+            message.innerText = randomMessage;
+        }, 2000);
+    });
 
-    loveInterval = setInterval(() => {
-        let randomText =
-        loveMessages[Math.floor(Math.random()*loveMessages.length)];
+    for(let i=0;i<80;i++){
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.animationDuration = (3 + Math.random()*7) + "s";
+        heart.style.fontSize = (15 + Math.random()*35) + "px";
+        document.body.appendChild(heart);
+    }
 
-        message.innerText = randomText;
-    }, 2000);
-}
-
-for(let i=0;i<80;i++){
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random()*100 + "vw";
-    heart.style.animationDuration = (3 + Math.random()*7) + "s";
-    heart.style.fontSize = (15 + Math.random()*35) + "px";
-    document.body.appendChild(heart);
-}
+});
 </script>
 
 </body>
-</html>
 </html>
