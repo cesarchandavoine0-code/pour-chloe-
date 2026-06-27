@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
 body {
   width: 100vw;
   height: 100vh;
@@ -17,18 +17,17 @@ body {
   font-family: 'Montserrat', sans-serif;
   color: #F9EEF3;
 }
-
+ 
 canvas {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   pointer-events: none;
 }
-
-#cv-bg    { z-index: 1; }
-#cv-aurora { z-index: 2; mix-blend-mode: screen; }
-#cv-parts  { z-index: 3; }
-
+ 
+#cv-main { z-index: 1; }
+#cv-parts { z-index: 2; }
+ 
 .vignette {
   position: fixed;
   inset: 0;
@@ -36,7 +35,7 @@ canvas {
   background: radial-gradient(ellipse 88% 88% at 50% 50%, transparent 28%, rgba(6,1,4,0.72) 100%);
   pointer-events: none;
 }
-
+ 
 #ui {
   position: fixed;
   inset: 0;
@@ -50,7 +49,7 @@ canvas {
   pointer-events: none;
 }
 #ui > * { pointer-events: all; }
-
+ 
 .ornament {
   font-family: 'Cormorant Garamond', serif;
   font-size: 0.85rem;
@@ -61,7 +60,7 @@ canvas {
   animation: fadeup 1.2s ease 0.2s forwards;
   margin-bottom: 1.2rem;
 }
-
+ 
 .photo-wrap {
   position: relative;
   width: 170px;
@@ -80,7 +79,7 @@ canvas {
 .ring1 { width: 194px; height: 194px; border: 1px solid rgba(212,168,83,0.35); animation-duration: 22s; }
 .ring2 { width: 214px; height: 214px; border: 1px dashed rgba(200,69,108,0.22); animation-duration: 38s; animation-direction: reverse; }
 .ring3 { width: 234px; height: 234px; border: 1px solid rgba(242,196,208,0.09); animation-duration: 55s; }
-
+ 
 .photo-img {
   width: 170px;
   height: 170px;
@@ -89,10 +88,9 @@ canvas {
   border: 2px solid rgba(212,168,83,0.45);
   box-shadow: 0 0 50px rgba(123,26,58,0.55), 0 0 100px rgba(123,26,58,0.2);
   background: linear-gradient(135deg, #4A0E22, #7B1A3A);
-  transition: opacity 0.7s ease;
   display: block;
 }
-
+ 
 .name {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -108,7 +106,7 @@ canvas {
   animation: fadeup 1.2s ease 0.8s forwards;
   margin-bottom: 0.45rem;
 }
-
+ 
 .sub {
   font-size: 0.65rem;
   font-weight: 100;
@@ -119,7 +117,7 @@ canvas {
   animation: fadeup 1.2s ease 1s forwards;
   margin-bottom: 2.6rem;
 }
-
+ 
 .sep {
   display: flex;
   align-items: center;
@@ -131,7 +129,7 @@ canvas {
 .sep-line { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,83,0.45)); }
 .sep-line.r { background: linear-gradient(270deg, transparent, rgba(212,168,83,0.45)); }
 .sep-heart { color: #C8456C; font-size: 0.85rem; animation: pulseh 2.8s ease-in-out infinite; display: inline-block; }
-
+ 
 .btn-main {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.65rem;
@@ -156,7 +154,7 @@ canvas {
   transform: translateY(-2px);
   box-shadow: 0 0 28px rgba(200,69,108,0.22);
 }
-
+ 
 .btn-lettre {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -172,8 +170,7 @@ canvas {
   padding: 0.4rem 1rem;
 }
 .btn-lettre:hover { opacity: 0.8; letter-spacing: 0.16em; }
-
-/* Lettre overlay */
+ 
 #lettre-wrap {
   position: fixed;
   inset: 0;
@@ -186,14 +183,14 @@ canvas {
   transition: opacity 0.65s ease;
 }
 #lettre-wrap.on { opacity: 1; pointer-events: all; }
-
+ 
 #lettre-bg {
   position: absolute;
   inset: 0;
   background: rgba(8,2,6,0.91);
   backdrop-filter: blur(10px);
 }
-
+ 
 #lettre-box {
   position: relative;
   z-index: 2;
@@ -210,7 +207,7 @@ canvas {
 }
 #lettre-box::-webkit-scrollbar { width: 2px; }
 #lettre-box::-webkit-scrollbar-thumb { background: #7B1A3A; }
-
+ 
 .l-ornament {
   text-align: center;
   font-family: 'Cormorant Garamond', serif;
@@ -220,7 +217,7 @@ canvas {
   letter-spacing: 0.6em;
   margin-bottom: 2rem;
 }
-
+ 
 #l-text {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
@@ -229,7 +226,7 @@ canvas {
   color: #F9EEF3;
   white-space: pre-wrap;
 }
-
+ 
 #l-cursor {
   display: inline-block;
   width: 1px;
@@ -239,7 +236,7 @@ canvas {
   margin-left: 1px;
   animation: blink 0.8s steps(1) infinite;
 }
-
+ 
 .btn-close {
   position: absolute;
   top: 1rem;
@@ -257,8 +254,7 @@ canvas {
   transition: opacity 0.3s;
 }
 .btn-close:hover { opacity: 1; }
-
-/* Toast */
+ 
 #toast {
   position: fixed;
   bottom: 2rem;
@@ -281,7 +277,7 @@ canvas {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
 }
-
+ 
 @keyframes fadeup {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -292,12 +288,11 @@ canvas {
 </style>
 </head>
 <body>
-
-<canvas id="cv-bg"></canvas>
-<canvas id="cv-aurora"></canvas>
+ 
+<canvas id="cv-main"></canvas>
 <canvas id="cv-parts"></canvas>
 <div class="vignette"></div>
-
+ 
 <div id="ui">
   <div class="ornament">— Pour toi —</div>
   <div class="photo-wrap">
@@ -316,7 +311,7 @@ canvas {
   <button class="btn-main" id="btn-main" onclick="startExp()">Ouvre ton cœur</button>
   <button class="btn-lettre" onclick="openLettre()">Lire ma lettre ✦</button>
 </div>
-
+ 
 <div id="lettre-wrap">
   <div id="lettre-bg" onclick="closeLettre()"></div>
   <div id="lettre-box">
@@ -325,37 +320,34 @@ canvas {
     <div id="l-text"></div><span id="l-cursor"></span>
   </div>
 </div>
-
+ 
 <div id="toast"></div>
-
+ 
 <audio id="music" loop preload="auto">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
-
+ 
 <script>
-(function() {
-  // ── Setup canvas ──
-  var cvBg = document.getElementById('cv-bg');
-  var ctxBg = cvBg.getContext('2d');
-  var cvAu = document.getElementById('cv-aurora');
-  var ctxAu = cvAu.getContext('2d');
+(function () {
+  var cvMain = document.getElementById('cv-main');
+  var ctx = cvMain.getContext('2d');
   var cvPt = document.getElementById('cv-parts');
   var ctxPt = cvPt.getContext('2d');
-
+ 
   var W = 0, H = 0;
+ 
   function resize() {
     W = window.innerWidth;
     H = window.innerHeight;
-    cvBg.width = W; cvBg.height = H;
-    cvAu.width = W; cvAu.height = H;
+    cvMain.width = W; cvMain.height = H;
     cvPt.width = W; cvPt.height = H;
+    // Redessiner le fond statique après resize
+    drawStaticBg();
   }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // ── Étoiles ──
+ 
+  // ── Étoiles (réduites à 150) ──
   var stars = [];
-  for (var i = 0; i < 280; i++) {
+  for (var i = 0; i < 150; i++) {
     stars.push({
       x: Math.random(),
       y: Math.random() * 0.62,
@@ -366,26 +358,18 @@ canvas {
       col: Math.random() < 0.15 ? '#ECC97A' : Math.random() < 0.2 ? '#F2C4D0' : '#ffffff'
     });
   }
-
-  // ── Météores ──
+ 
+  // ── Météores (2 seulement) ──
   var meteors = [];
   function newMeteor() {
-    return {
-      x: 0.05 + Math.random() * 0.75,
-      y: 0.02 + Math.random() * 0.22,
-      prog: 0,
-      speed: 0.004 + Math.random() * 0.004,
-      len: 0.07 + Math.random() * 0.1,
-      delay: 3 + Math.random() * 9,
-      active: false
-    };
+    return { x: 0.05 + Math.random() * 0.75, y: 0.02 + Math.random() * 0.22, prog: 0, speed: 0.005 + Math.random() * 0.004, len: 0.08 + Math.random() * 0.08, delay: 4 + Math.random() * 10, active: false };
   }
-  for (var m = 0; m < 4; m++) meteors.push(newMeteor());
-
-  // ── Arbres ──
+  for (var m = 0; m < 2; m++) meteors.push(newMeteor());
+ 
+  // ── Arbres (réduits) ──
   var trees = [];
-  for (var ti = 0; ti < 20; ti++) {
-    var side = ti < 7 ? 0 : ti < 14 ? 1 : 2;
+  for (var ti = 0; ti < 14; ti++) {
+    var side = ti < 5 ? 0 : ti < 10 ? 1 : 2;
     trees.push({
       xr: side === 0 ? 0.02 + Math.random() * 0.16 : side === 1 ? 0.82 + Math.random() * 0.16 : 0.18 + Math.random() * 0.64,
       yr: 0.72 + Math.random() * 0.05,
@@ -396,100 +380,110 @@ canvas {
       swayS: 0.003 + Math.random() * 0.005
     });
   }
-
-  function drawTree(ctx, x, y, h, w) {
-    ctx.beginPath();
-    ctx.rect(x - w * 0.07, y, w * 0.14, h * 0.28);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(x, y - h * 0.52); ctx.lineTo(x - w * 0.5, y + h * 0.08); ctx.lineTo(x + w * 0.5, y + h * 0.08); ctx.closePath(); ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(x, y - h * 0.76); ctx.lineTo(x - w * 0.38, y - h * 0.14); ctx.lineTo(x + w * 0.38, y - h * 0.14); ctx.closePath(); ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(x, y - h); ctx.lineTo(x - w * 0.25, y - h * 0.44); ctx.lineTo(x + w * 0.25, y - h * 0.44); ctx.closePath(); ctx.fill();
+ 
+  function drawTree(c, x, y, h, w) {
+    c.beginPath(); c.rect(x - w * 0.07, y, w * 0.14, h * 0.28); c.fill();
+    c.beginPath(); c.moveTo(x, y - h * 0.52); c.lineTo(x - w * 0.5, y + h * 0.08); c.lineTo(x + w * 0.5, y + h * 0.08); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(x, y - h * 0.76); c.lineTo(x - w * 0.38, y - h * 0.14); c.lineTo(x + w * 0.38, y - h * 0.14); c.closePath(); c.fill();
+    c.beginPath(); c.moveTo(x, y - h); c.lineTo(x - w * 0.25, y - h * 0.44); c.lineTo(x + w * 0.25, y - h * 0.44); c.closePath(); c.fill();
   }
-
-  // ── Lueurs cité ──
+ 
+  // ── Lueurs cité (réduites) ──
   var cityLights = [];
-  for (var ci = 0; ci < 55; ci++) {
+  for (var ci = 0; ci < 30; ci++) {
     cityLights.push({
-      xr: Math.random(),
-      yr: 0.755 + Math.random() * 0.045,
-      r: 0.5 + Math.random() * 1.4,
-      a: 0.2 + Math.random() * 0.45,
-      tw: Math.random() * 6.28,
-      tws: 0.01 + Math.random() * 0.04,
+      xr: Math.random(), yr: 0.755 + Math.random() * 0.045, r: 0.5 + Math.random() * 1.4,
+      a: 0.2 + Math.random() * 0.45, tw: Math.random() * 6.28, tws: 0.01 + Math.random() * 0.04,
       col: Math.random() < 0.4 ? '#ECC97A' : Math.random() < 0.5 ? '#F2C4D0' : '#C8456C'
     });
   }
-
-  // ── Particules ──
-  var SYMS = ['♥','✦','·','◇','✧','❧'];
-  var COLS = ['rgba(200,69,108,','rgba(212,168,83,','rgba(165,32,80,','rgba(242,196,208,','rgba(123,26,58,'];
+ 
+  // ── Particules (réduites à 45) ──
+  var SYMS = ['♥', '✦', '·', '◇'];
+  var COLS = ['rgba(200,69,108,', 'rgba(212,168,83,', 'rgba(242,196,208,'];
   var parts = [];
   function newPart() {
     var hrt = Math.random() < 0.18;
     return {
-      x: Math.random() * W,
-      y: H + 20 + Math.random() * 50,
-      vx: (Math.random() - 0.5) * 0.45,
-      vy: -(0.32 + Math.random() * 0.75),
+      x: Math.random() * W, y: H + 20 + Math.random() * 50,
+      vx: (Math.random() - 0.5) * 0.45, vy: -(0.32 + Math.random() * 0.75),
       alpha: 0.08 + Math.random() * 0.52,
       size: hrt ? 10 + Math.random() * 18 : 3 + Math.random() * 12,
       sym: hrt ? '♥' : SYMS[Math.floor(Math.random() * SYMS.length)],
       col: COLS[Math.floor(Math.random() * COLS.length)],
-      ang: Math.random() * 6.28,
-      twist: (Math.random() - 0.5) * 0.012,
-      drift: Math.random() * 6.28,
-      driftS: 0.006 + Math.random() * 0.008
+      ang: Math.random() * 6.28, twist: (Math.random() - 0.5) * 0.012,
+      drift: Math.random() * 6.28, driftS: 0.006 + Math.random() * 0.008
     };
   }
-  for (var pi = 0; pi < 85; pi++) { var p = newPart(); p.y = Math.random() * H; parts.push(p); }
-
-  var mx = -999, my = -999;
-  window.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-
+  for (var pi = 0; pi < 45; pi++) { var p = newPart(); p.y = Math.random() * H; parts.push(p); }
+ 
+  // Fond statique sur canvas séparé (redessiné rarement)
+  var bgCanvas = document.createElement('canvas');
+  var bgCtx = bgCanvas.getContext('2d');
+ 
+  function drawStaticBg() {
+    bgCanvas.width = W; bgCanvas.height = H;
+ 
+    // Ciel
+    var sky = bgCtx.createLinearGradient(0, 0, 0, H * 0.82);
+    sky.addColorStop(0, '#050108'); sky.addColorStop(0.28, '#0D0412');
+    sky.addColorStop(0.55, '#1A0820'); sky.addColorStop(0.75, '#2D1020');
+    sky.addColorStop(0.9, '#3D1428'); sky.addColorStop(1, '#4A1830');
+    bgCtx.fillStyle = sky; bgCtx.fillRect(0, 0, W, H);
+ 
+    // Horizon glow
+    var hg = bgCtx.createLinearGradient(0, H * 0.68, 0, H * 0.82);
+    hg.addColorStop(0, 'rgba(123,26,58,0)'); hg.addColorStop(0.5, 'rgba(123,26,58,0.1)'); hg.addColorStop(1, 'rgba(200,69,108,0.07)');
+    bgCtx.fillStyle = hg; bgCtx.fillRect(0, H * 0.68, W, H * 0.15);
+ 
+    // Montagnes
+    function drawMtn(yBase, color, freq1, freq2, seed) {
+      bgCtx.beginPath(); bgCtx.moveTo(0, H);
+      for (var px = 0; px <= W + 6; px += 6) {
+        bgCtx.lineTo(px, yBase * H + Math.sin(px * freq1 + seed) * 0.065 * H + Math.cos(px * freq2 + seed * 1.4) * 0.02 * H);
+      }
+      bgCtx.lineTo(W, H); bgCtx.closePath(); bgCtx.fillStyle = color; bgCtx.fill();
+    }
+    drawMtn(0.62, 'rgba(28,7,16,0.78)', 0.0024, 0.0013, 0.5);
+    drawMtn(0.66, 'rgba(18,5,11,0.9)', 0.0034, 0.0018, 1.2);
+ 
+    // Sol
+    var soil = bgCtx.createLinearGradient(0, H * 0.72, 0, H);
+    soil.addColorStop(0, '#1A0810'); soil.addColorStop(0.4, '#110508'); soil.addColorStop(1, '#090305');
+    bgCtx.fillStyle = soil; bgCtx.fillRect(0, H * 0.72, W, H * 0.28);
+ 
+    // Sol bas
+    var fg3 = bgCtx.createLinearGradient(0, H * 0.91, 0, H);
+    fg3.addColorStop(0, 'rgba(4,1,2,0)'); fg3.addColorStop(1, 'rgba(4,1,2,0.94)');
+    bgCtx.fillStyle = fg3; bgCtx.fillRect(0, H * 0.91, W, H * 0.09);
+  }
+ 
   var tick = 0;
-
+  var lx, ly;
+  var frameCount = 0;
+ 
   function loop() {
-    tick += 0.012;
+    tick += 0.014;
+    frameCount++;
     var t = tick;
-
-    // ── SKY ──
-    ctxBg.clearRect(0, 0, W, H);
-    var sky = ctxBg.createLinearGradient(0, 0, 0, H * 0.82);
-    sky.addColorStop(0,    '#050108');
-    sky.addColorStop(0.28, '#0D0412');
-    sky.addColorStop(0.55, '#1A0820');
-    sky.addColorStop(0.75, '#2D1020');
-    sky.addColorStop(0.9,  '#3D1428');
-    sky.addColorStop(1,    '#4A1830');
-    ctxBg.fillStyle = sky;
-    ctxBg.fillRect(0, 0, W, H);
-
-    // horizon glow
-    var hg = ctxBg.createLinearGradient(0, H * 0.68, 0, H * 0.82);
-    hg.addColorStop(0, 'rgba(123,26,58,0)');
-    hg.addColorStop(0.5, 'rgba(123,26,58,0.1)');
-    hg.addColorStop(1, 'rgba(200,69,108,0.07)');
-    ctxBg.fillStyle = hg;
-    ctxBg.fillRect(0, H * 0.68, W, H * 0.15);
-
-    // ── ÉTOILES ──
+ 
+    // Blit fond statique
+    ctx.clearRect(0, 0, W, H);
+    ctx.drawImage(bgCanvas, 0, 0);
+ 
+    // ── ÉTOILES (scintillement) ──
     for (var si = 0; si < stars.length; si++) {
       var s = stars[si];
       s.tw += s.tws;
       var sa = s.a * (0.55 + Math.sin(s.tw) * 0.45);
-      ctxBg.save();
-      ctxBg.globalAlpha = sa;
-      ctxBg.fillStyle = s.col;
-      if (s.r > 1.0) { ctxBg.shadowColor = s.col; ctxBg.shadowBlur = 4; }
-      ctxBg.beginPath();
-      ctxBg.arc(s.x * W, s.y * H, s.r, 0, 6.28);
-      ctxBg.fill();
-      ctxBg.restore();
+      ctx.globalAlpha = sa;
+      ctx.fillStyle = s.col;
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, 6.28);
+      ctx.fill();
     }
-
+    ctx.globalAlpha = 1;
+ 
     // ── MÉTÉORES ──
     for (var mi = 0; mi < meteors.length; mi++) {
       var me = meteors[mi];
@@ -503,179 +497,87 @@ canvas {
         var ey = me.y * H + me.prog * me.len * H * 0.38;
         var sx = ex - me.len * W * 0.35;
         var sy = ey - me.len * H * 0.13;
-        var mg = ctxBg.createLinearGradient(sx, sy, ex, ey);
+        var mg = ctx.createLinearGradient(sx, sy, ex, ey);
         mg.addColorStop(0, 'rgba(242,196,208,0)');
         mg.addColorStop(1, 'rgba(242,196,208,' + (alpha * 0.88) + ')');
-        ctxBg.save();
-        ctxBg.strokeStyle = mg;
-        ctxBg.lineWidth = 1.2;
-        ctxBg.beginPath();
-        ctxBg.moveTo(sx, sy);
-        ctxBg.lineTo(ex, ey);
-        ctxBg.stroke();
-        ctxBg.restore();
-        if (me.prog >= 1) { var nm = newMeteor(); meteors[mi] = nm; }
+        ctx.strokeStyle = mg; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey); ctx.stroke();
+        if (me.prog >= 1) meteors[mi] = newMeteor();
       }
     }
-
+ 
     // ── LUNE ──
-    var lx = W * 0.72, ly = H * 0.17;
-    var lhalo = ctxBg.createRadialGradient(lx, ly, 18, lx, ly, 88);
-    lhalo.addColorStop(0, 'rgba(212,168,83,0.11)');
-    lhalo.addColorStop(0.5, 'rgba(212,168,83,0.04)');
-    lhalo.addColorStop(1, 'rgba(212,168,83,0)');
-    ctxBg.fillStyle = lhalo;
-    ctxBg.beginPath(); ctxBg.arc(lx, ly, 88, 0, 6.28); ctxBg.fill();
-
-    ctxBg.save();
-    ctxBg.shadowColor = 'rgba(212,168,83,0.55)';
-    ctxBg.shadowBlur = 18;
-    var lg = ctxBg.createRadialGradient(lx - 5, ly - 5, 2, lx, ly, 26);
-    lg.addColorStop(0, '#FFF5DC');
-    lg.addColorStop(0.6, '#ECC97A');
-    lg.addColorStop(1, '#C89A3A');
-    ctxBg.fillStyle = lg;
-    ctxBg.beginPath(); ctxBg.arc(lx, ly, 26, 0, 6.28); ctxBg.fill();
-    ctxBg.restore();
-    ctxBg.fillStyle = 'rgba(13,4,8,0.56)';
-    ctxBg.beginPath(); ctxBg.arc(lx + 9, ly - 3, 24, 0, 6.28); ctxBg.fill();
-
-    // ── AURORA ──
-    ctxAu.clearRect(0, 0, W, H);
+    lx = W * 0.72; ly = H * 0.17;
+    var lhalo = ctx.createRadialGradient(lx, ly, 18, lx, ly, 88);
+    lhalo.addColorStop(0, 'rgba(212,168,83,0.11)'); lhalo.addColorStop(0.5, 'rgba(212,168,83,0.04)'); lhalo.addColorStop(1, 'rgba(212,168,83,0)');
+    ctx.fillStyle = lhalo; ctx.beginPath(); ctx.arc(lx, ly, 88, 0, 6.28); ctx.fill();
+    ctx.save();
+    ctx.shadowColor = 'rgba(212,168,83,0.55)'; ctx.shadowBlur = 18;
+    var lg = ctx.createRadialGradient(lx - 5, ly - 5, 2, lx, ly, 26);
+    lg.addColorStop(0, '#FFF5DC'); lg.addColorStop(0.6, '#ECC97A'); lg.addColorStop(1, '#C89A3A');
+    ctx.fillStyle = lg; ctx.beginPath(); ctx.arc(lx, ly, 26, 0, 6.28); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(13,4,8,0.56)'; ctx.beginPath(); ctx.arc(lx + 9, ly - 3, 24, 0, 6.28); ctx.fill();
+ 
+    // ── AURORA (simplifié — rectangles larges, pas pixel par pixel) ──
     var bands = [
-      { cy: 0.22, c1: 'rgba(123,26,58,', c2: 'rgba(74,14,34,',  amp: 0.06, f: 0.0018, sp: 0.25 },
-      { cy: 0.27, c1: 'rgba(165,32,80,', c2: 'rgba(200,69,108,', amp: 0.05, f: 0.002,  sp: 0.18 },
-      { cy: 0.19, c1: 'rgba(212,168,83,',c2: 'rgba(165,32,80,', amp: 0.04, f: 0.0025, sp: 0.3  }
+      { cy: 0.22, c1: 'rgba(123,26,58,', c2: 'rgba(165,32,80,', amp: 0.05, sp: 0.18 },
+      { cy: 0.27, c1: 'rgba(165,32,80,', c2: 'rgba(200,69,108,', amp: 0.04, sp: 0.14 }
     ];
     for (var bi = 0; bi < bands.length; bi++) {
       var b = bands[bi];
-      for (var x = 0; x < W; x += 2) {
-        var wave = Math.sin(x * b.f + t * b.sp) * b.amp * H + Math.sin(x * b.f * 1.7 + t * b.sp * 1.3 + 1.2) * b.amp * 0.5 * H;
-        var cy = b.cy * H + wave;
-        var hh = (0.038 + Math.sin(x * 0.003 + t * 0.2) * 0.018) * H;
-        var al = 0.04 + Math.sin(x * 0.005 + t * 0.38) * 0.022;
-        var ag = ctxAu.createLinearGradient(x, cy - hh, x, cy + hh);
-        ag.addColorStop(0, b.c1 + '0)');
-        ag.addColorStop(0.5, b.c2 + al + ')');
-        ag.addColorStop(1, b.c1 + '0)');
-        ctxAu.fillStyle = ag;
-        ctxAu.fillRect(x, cy - hh, 2, hh * 2);
-      }
+      var wave = Math.sin(t * b.sp) * b.amp * H;
+      var cy = b.cy * H + wave;
+      var hh = 0.04 * H;
+      var al = 0.04 + Math.sin(t * 0.38 + bi) * 0.015;
+      var ag = ctx.createLinearGradient(0, cy - hh, 0, cy + hh);
+      ag.addColorStop(0, b.c1 + '0)'); ag.addColorStop(0.5, b.c2 + al + ')'); ag.addColorStop(1, b.c1 + '0)');
+      ctx.fillStyle = ag; ctx.fillRect(0, cy - hh, W, hh * 2);
     }
-
-    // ── MONTAGNES ──
-    function drawMountainLayer(yBase, color, freq1, freq2, freq3, amp, amp2, seed) {
-      ctxBg.beginPath();
-      ctxBg.moveTo(0, H);
-      var px = 0;
-      while (px <= W + 60) {
-        var nx = px + 6;
-        var ny = yBase * H + Math.sin(px * freq1 + seed) * amp * H + Math.cos(px * freq2 + seed * 1.4) * amp2 * H + Math.sin(px * freq3 + seed * 0.6) * amp2 * 0.5 * H;
-        ctxBg.lineTo(nx, ny);
-        px = nx;
-      }
-      ctxBg.lineTo(W, H);
-      ctxBg.closePath();
-      ctxBg.fillStyle = color;
-      ctxBg.fill();
-    }
-
-    drawMountainLayer(0.62, 'rgba(28,7,16,0.78)', 0.0024, 0.0013, 0.005, 0.065, 0.02, 0.5);
-    drawMountainLayer(0.66, 'rgba(18,5,11,0.9)',  0.0034, 0.0018, 0.007, 0.09,  0.03, 1.2);
-
-    // ── SOL ──
-    var soil = ctxBg.createLinearGradient(0, H * 0.72, 0, H);
-    soil.addColorStop(0, '#1A0810');
-    soil.addColorStop(0.4, '#110508');
-    soil.addColorStop(1, '#090305');
-    ctxBg.fillStyle = soil;
-    ctxBg.fillRect(0, H * 0.72, W, H * 0.28);
-
-    // ── ARBRES arrière ──
-    ctxBg.fillStyle = 'rgba(11,3,7,0.88)';
-    for (var trai = 0; trai < trees.length; trai++) {
-      var tr = trees[trai];
+ 
+    // ── ARBRES (oscillation lente) ──
+    ctx.fillStyle = 'rgba(11,3,7,0.88)';
+    for (var tri = 0; tri < trees.length; tri++) {
+      var tr = trees[tri];
       if (tr.layer !== 1) continue;
       tr.sway += tr.swayS;
-      ctxBg.save();
-      ctxBg.translate(Math.sin(tr.sway) * 1.5, 0);
-      drawTree(ctxBg, tr.xr * W, tr.yr * H, tr.hr * H, tr.wr * W);
-      ctxBg.restore();
+      ctx.save(); ctx.translate(Math.sin(tr.sway) * 1.5, 0);
+      drawTree(ctx, tr.xr * W, tr.yr * H, tr.hr * H, tr.wr * W);
+      ctx.restore();
     }
-
+ 
     // ── RIVIÈRE ──
     var ry = H * 0.775;
-    var rg = ctxBg.createLinearGradient(0, ry - 14, 0, ry + 28);
-    rg.addColorStop(0, 'rgba(123,26,58,0.16)');
-    rg.addColorStop(0.5, 'rgba(200,69,108,0.07)');
-    rg.addColorStop(1, 'rgba(13,4,8,0)');
-    ctxBg.fillStyle = rg;
-    ctxBg.beginPath();
-    ctxBg.moveTo(0, ry);
-    for (var rx2 = 0; rx2 <= W; rx2 += 4) {
-      ctxBg.lineTo(rx2, ry + Math.sin(rx2 * 0.014 + t * 0.85) * 3 + Math.sin(rx2 * 0.029 + t * 1.2) * 1.5);
+    var rg = ctx.createLinearGradient(0, ry - 14, 0, ry + 28);
+    rg.addColorStop(0, 'rgba(123,26,58,0.16)'); rg.addColorStop(0.5, 'rgba(200,69,108,0.07)'); rg.addColorStop(1, 'rgba(13,4,8,0)');
+    ctx.fillStyle = rg;
+    ctx.beginPath(); ctx.moveTo(0, ry);
+    for (var rx2 = 0; rx2 <= W; rx2 += 8) {
+      ctx.lineTo(rx2, ry + Math.sin(rx2 * 0.014 + t * 0.85) * 3);
     }
-    ctxBg.lineTo(W, ry + 28); ctxBg.lineTo(0, ry + 28); ctxBg.closePath(); ctxBg.fill();
-
-    // reflet lune dans rivière
-    var rfl = ctxBg.createRadialGradient(lx, ry + 7, 0, lx, ry + 7, 55);
-    rfl.addColorStop(0, 'rgba(212,168,83,0.11)');
-    rfl.addColorStop(1, 'rgba(212,168,83,0)');
-    ctxBg.fillStyle = rfl;
-    ctxBg.beginPath();
-    ctxBg.ellipse(lx, ry + 7, 55, 11, 0, 0, 6.28);
-    ctxBg.fill();
-
+    ctx.lineTo(W, ry + 28); ctx.lineTo(0, ry + 28); ctx.closePath(); ctx.fill();
+ 
     // ── ARBRES avant ──
-    ctxBg.fillStyle = 'rgba(6,1,3,0.97)';
+    ctx.fillStyle = 'rgba(6,1,3,0.97)';
     for (var trfi = 0; trfi < trees.length; trfi++) {
       var trf = trees[trfi];
       if (trf.layer !== 0) continue;
       trf.sway += trf.swayS;
-      ctxBg.save();
-      ctxBg.translate(Math.sin(trf.sway) * 2, 0);
-      drawTree(ctxBg, trf.xr * W, trf.yr * H, trf.hr * H * 1.18, trf.wr * W * 1.12);
-      ctxBg.restore();
+      ctx.save(); ctx.translate(Math.sin(trf.sway) * 2, 0);
+      drawTree(ctx, trf.xr * W, trf.yr * H, trf.hr * H * 1.18, trf.wr * W * 1.12);
+      ctx.restore();
     }
-
-    // ── BRUME ──
-    for (var fgi = 0; fgi < 4; fgi++) {
-      var fy = H * (0.752 + fgi * 0.021);
-      var fg2 = ctxBg.createLinearGradient(0, fy - 15, 0, fy + 15);
-      fg2.addColorStop(0, 'rgba(212,168,83,0)');
-      fg2.addColorStop(0.5, 'rgba(212,168,83,' + (0.01 + Math.sin(t * 0.28 + fgi) * 0.005) + ')');
-      fg2.addColorStop(1, 'rgba(212,168,83,0)');
-      ctxBg.fillStyle = fg2;
-      ctxBg.beginPath();
-      ctxBg.moveTo(0, fy);
-      for (var fx = 0; fx <= W; fx += 5) {
-        ctxBg.lineTo(fx, fy + Math.sin(fx * 0.008 + t * 0.2 + fgi * 1.1) * 7);
-      }
-      ctxBg.lineTo(W, fy + 15); ctxBg.lineTo(0, fy + 15); ctxBg.closePath(); ctxBg.fill();
-    }
-
-    // sol bas
-    var fg3 = ctxBg.createLinearGradient(0, H * 0.91, 0, H);
-    fg3.addColorStop(0, 'rgba(4,1,2,0)');
-    fg3.addColorStop(1, 'rgba(4,1,2,0.94)');
-    ctxBg.fillStyle = fg3;
-    ctxBg.fillRect(0, H * 0.91, W, H * 0.09);
-
+ 
     // ── LUEURS CITÉ ──
     for (var cii = 0; cii < cityLights.length; cii++) {
       var cl = cityLights[cii];
       cl.tw += cl.tws;
-      ctxBg.save();
-      ctxBg.globalAlpha = cl.a * (0.58 + Math.sin(cl.tw) * 0.42);
-      ctxBg.shadowColor = cl.col;
-      ctxBg.shadowBlur = 5;
-      ctxBg.fillStyle = cl.col;
-      ctxBg.beginPath();
-      ctxBg.arc(cl.xr * W, cl.yr * H, cl.r, 0, 6.28);
-      ctxBg.fill();
-      ctxBg.restore();
+      ctx.globalAlpha = cl.a * (0.58 + Math.sin(cl.tw) * 0.42);
+      ctx.fillStyle = cl.col;
+      ctx.beginPath(); ctx.arc(cl.xr * W, cl.yr * H, cl.r, 0, 6.28); ctx.fill();
     }
-
+    ctx.globalAlpha = 1;
+ 
     // ── PARTICULES ──
     ctxPt.clearRect(0, 0, W, H);
     for (var ppi = 0; ppi < parts.length; ppi++) {
@@ -684,76 +586,67 @@ canvas {
       pp.x += pp.vx + Math.sin(pp.drift) * 0.33;
       pp.y += pp.vy;
       pp.ang += pp.twist;
-      var ddx = pp.x - mx, ddy = pp.y - my;
-      var dist = Math.sqrt(ddx * ddx + ddy * ddy);
-      if (dist < 120 && dist > 0) { pp.x += (ddx / dist) * 1.0; pp.y += (ddy / dist) * 1.0; }
-      if (pp.y < -80) { var np = newPart(); parts[ppi] = np; }
-      ctxPt.save();
+      if (pp.y < -80) { parts[ppi] = newPart(); continue; }
       ctxPt.globalAlpha = pp.alpha;
       ctxPt.font = pp.size + 'px serif';
       ctxPt.fillStyle = pp.col + '0.9)';
+      ctxPt.save();
       ctxPt.translate(pp.x, pp.y);
       ctxPt.rotate(pp.ang);
       ctxPt.fillText(pp.sym, 0, 0);
       ctxPt.restore();
     }
-
+    ctxPt.globalAlpha = 1;
+ 
     requestAnimationFrame(loop);
   }
-
+ 
+  resize();
+  window.addEventListener('resize', function() { resize(); });
   loop();
-
+ 
   // ── Slideshow ──
   var PHOTOS = ['photo1.png', 'photo2.jpg', 'photo3.jpg'];
   var pidx = 0;
-  setInterval(function() {
+  setInterval(function () {
     pidx = (pidx + 1) % PHOTOS.length;
     var img = document.getElementById('slideshow');
     img.style.transition = 'opacity 0.8s ease';
     img.style.opacity = '0';
-    setTimeout(function() { img.src = PHOTOS[pidx]; img.style.opacity = '1'; }, 800);
+    setTimeout(function () { img.src = PHOTOS[pidx]; img.style.opacity = '1'; }, 800);
   }, 4500);
-
+ 
   // ── Musique ──
   var musicOn = false;
-  window.startExp = function() {
+  window.startExp = function () {
     var btn = document.getElementById('btn-main');
-    btn.innerHTML = '♥';
-    btn.style.fontSize = '1.5rem';
-    btn.style.letterSpacing = '0';
+    btn.innerHTML = '♥'; btn.style.fontSize = '1.5rem'; btn.style.letterSpacing = '0';
     if (musicOn) return;
     var mus = document.getElementById('music');
-    mus.play().then(function() {
-      musicOn = true;
-      showToast('♪ Musique activée');
-    }).catch(function() {
+    mus.play().then(function () { musicOn = true; showToast('♪ Musique activée'); }).catch(function () {
       showToast('♪ Clique encore pour la musique');
-      btn.onclick = function() {
-        mus.play().then(function() { musicOn = true; showToast('♪ En route ♪'); });
-      };
+      btn.onclick = function () { mus.play().then(function () { musicOn = true; showToast('♪ En route ♪'); }); };
     });
   };
-
+ 
   function showToast(msg) {
     var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('on');
-    setTimeout(function() { t.classList.remove('on'); }, 3200);
+    t.textContent = msg; t.classList.add('on');
+    setTimeout(function () { t.classList.remove('on'); }, 3200);
   }
-
+ 
   // ── Lettre ──
   var LETTRE = "Chloé,\n\nOn dit que l'amour est cette étrange force qui transforme le simple en éternel. Et depuis que ton nom habite mes pensées, je comprends mieux ces mots que les poètes poursuivaient sans fin.\n\nComme l'écrivait Victor Hugo, « aimer, c'est agir » — alors je t'écris, parce que mon cœur trouve dans tes silences plus de vérité que dans mille discours.\n\nIl y a dans ton prénom une douceur qui ressemble au printemps, une lumière calme qui traverse mes jours comme un soleil après l'orage. Et si Paul Éluard disait que « la courbe de tes yeux fait le tour de mon cœur », je crois que ton sourire, lui, a trouvé le chemin du mien sans jamais se perdre.\n\nTu es cette rare présence qui rend le temps plus léger, cette évidence que l'on ne cherche pas mais que l'on reconnaît dès qu'elle apparaît.\n\nL'amour ne consiste pas à se regarder l'un l'autre, mais à regarder ensemble dans la même direction. Avec toi, j'ai l'impression que même l'horizon devient plus beau.\n\nChloé, il existe des personnes qui marquent une vie comme une phrase inoubliable dans un livre qu'on relit sans cesse. Pour moi, tu es cette phrase.\n\nEt s'il fallait résumer tout ce que je ressens en quelques mots, ce serait simplement ceci :\n\ndans le grand désordre du monde, ton existence est l'une de mes plus belles certitudes.\n\n                                                         ♥";
-
+ 
   var ltTO = null, ltOpen = false;
-
-  window.openLettre = function() {
+ 
+  window.openLettre = function () {
     if (ltOpen) return;
     ltOpen = true;
     document.getElementById('lettre-wrap').classList.add('on');
     var el = document.getElementById('l-text');
     var cur = document.getElementById('l-cursor');
-    el.textContent = '';
-    cur.style.display = 'inline-block';
+    el.textContent = ''; cur.style.display = 'inline-block';
     var i = 0;
     function type() {
       if (i < LETTRE.length) {
@@ -761,21 +654,18 @@ canvas {
         var ch = LETTRE[i - 1];
         var d = ch === '\n' ? 75 : '.!?,;:'.indexOf(ch) >= 0 ? 160 + Math.random() * 100 : 22 + Math.random() * 24;
         ltTO = setTimeout(type, d);
-      } else {
-        cur.style.display = 'none';
-      }
+      } else { cur.style.display = 'none'; }
     }
     type();
   };
-
-  window.closeLettre = function() {
-    clearTimeout(ltTO);
-    ltOpen = false;
+ 
+  window.closeLettre = function () {
+    clearTimeout(ltTO); ltOpen = false;
     document.getElementById('lettre-wrap').classList.remove('on');
     document.getElementById('l-text').textContent = '';
     document.getElementById('l-cursor').style.display = 'inline-block';
   };
-
+ 
 })();
 </script>
 </body>
