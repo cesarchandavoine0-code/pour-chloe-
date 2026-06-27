@@ -3,359 +3,599 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pour Chloé ❤️</title>
+<title>Pour Chloé</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@100;200;300&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --crimson:#7B1A3A;--crimson-l:#A52050;--crimson-d:#4A0E22;
+  --rose:#C8456C;--blush:#F2C4D0;--gold:#D4A853;--gold-l:#ECC97A;
+  --dark:#0D0408;--dark2:#1A0810;--dark3:#2D1020;
+  --tl:#F9EEF3;--tm:#D4A0B5;
 }
-body{
-    height:100vh;
-    background:linear-gradient(135deg,#ff4d88,#ff80bf,#ffd6e7);
-    overflow:hidden;
-    font-family:Arial,sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-}
-.container{
-    text-align:center;
-    z-index:2;
-    padding:20px;
-    max-width:800px;
-}
-.photo{
-    width:280px;
-    height:280px;
-    border-radius:50%;
-    object-fit:cover;
-    border:6px solid white;
-    box-shadow:0 0 40px rgba(255,255,255,0.9);
-    animation:float 4s ease-in-out infinite;
-}
-h1{
-    color:white;
-    font-size:4rem;
-    margin-top:20px;
-    text-shadow:0 0 20px rgba(255,255,255,.8);
-    animation:pulse 2s infinite;
-}
-p{
-    color:white;
-    font-size:1.4rem;
-    margin-top:20px;
-    text-shadow:0 0 10px rgba(255,255,255,.6);
-}
-button{
-    margin-top:30px;
-    padding:15px 35px;
-    border:none;
-    border-radius:30px;
-    background:white;
-    color:#ff4d88;
-    font-size:1.1rem;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-    box-shadow:0 0 20px rgba(255,255,255,.5);
-}
-button:hover{
-    transform:scale(1.1);
-}
-.message{
-    margin-top:25px;
-    color:white;
-    font-size:1.2rem;
-    opacity:0;
-    transition:1s;
-}
-.show{
-    opacity:1;
-}
-#coeur-btn {
-    margin-top: 15px;
-    padding: 15px 35px;
-    border: 3px solid white;
-    border-radius: 30px;
-    background: transparent;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 0 20px rgba(255,255,255,.3);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-#coeur-btn:hover {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.1);
-}
-#lettre-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    background: rgba(0,0,0,0.75);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-}
-#lettre-overlay.active {
-    display: flex;
-}
-#lettre-box {
-    background: rgba(255, 255, 255, 0.07);
-    backdrop-filter: blur(12px);
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 20px;
-    padding: 40px 45px;
-    max-width: 600px;
-    width: 90%;
-    color: white;
-    font-family: 'Georgia', serif;
-    font-size: 1.15rem;
-    line-height: 1.9;
-    position: relative;
-    box-shadow: 0 0 60px rgba(255, 77, 136, 0.4);
-    max-height: 80vh;
-    overflow-y: auto;
-}
-#lettre-text {
-    white-space: pre-wrap;
-    min-height: 2em;
-}
-#cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.1em;
-    background: white;
-    margin-left: 2px;
-    vertical-align: middle;
-    animation: blink 0.7s steps(1) infinite;
-}
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-#close-lettre {
-    position: absolute;
-    top: 12px; right: 18px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.6rem;
-    cursor: pointer;
-    opacity: 0.7;
-    padding: 0;
-    box-shadow: none;
-    margin: 0;
-}
-#close-lettre:hover {
-    opacity: 1;
-    transform: scale(1.2);
-    background: none;
-}
-.heart{
-    position:absolute;
-    color:white;
-    animation:fall linear infinite;
-    user-select:none;
-    pointer-events:none;
-}
-#music-status {
-    margin-top: 10px;
-    color: rgba(255,255,255,0.7);
-    font-size: 0.85rem;
-    min-height: 20px;
-}
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.08);}
-    100%{transform:scale(1);}
-}
-@keyframes float{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-15px);}
-    100%{transform:translateY(0);}
-}
-@keyframes fall{
-    from{
-        transform:translateY(-100px) rotate(0deg);
-        opacity:1;
-    }
-    to{
-        transform:translateY(110vh) rotate(20deg);
-        opacity:0;
-    }
-}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--dark);font-family:'Montserrat',sans-serif;color:var(--tl)}
+canvas{position:fixed;inset:0;pointer-events:none}
+#cv-bg{z-index:1}
+#cv-particles{z-index:3}
+#cv-aurora{z-index:2;mix-blend-mode:screen}
+.vignette{position:fixed;inset:0;z-index:4;background:radial-gradient(ellipse 85% 85% at 50% 50%,transparent 30%,rgba(8,2,6,0.75) 100%);pointer-events:none}
+
+/* UI layer */
+#ui{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+#ui *{pointer-events:all}
+
+.ornament{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--gold);letter-spacing:.45em;text-transform:uppercase;opacity:0;margin-bottom:1.4rem;animation:fadeUp 1.4s ease 0.3s forwards}
+
+.photo-wrap{position:relative;width:180px;height:180px;margin-bottom:1.8rem;opacity:0;animation:fadeUp 1.4s ease 0.6s forwards}
+.ring1{position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(212,168,83,.35);animation:spin 25s linear infinite}
+.ring2{position:absolute;inset:-22px;border-radius:50%;border:1px dashed rgba(200,69,108,.2);animation:spin 40s linear infinite reverse}
+.ring3{position:absolute;inset:-32px;border-radius:50%;border:1px solid rgba(242,196,208,.08);animation:spin 60s linear infinite}
+.photo-img{width:180px;height:180px;border-radius:50%;object-fit:cover;border:2px solid rgba(212,168,83,.45);box-shadow:0 0 50px rgba(123,26,58,.5),0 0 100px rgba(123,26,58,.2),inset 0 0 30px rgba(0,0,0,.3);background:linear-gradient(135deg,#4A0E22,#7B1A3A);transition:opacity .6s ease}
+
+.name{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,11vw,7rem);font-weight:300;font-style:italic;background:linear-gradient(135deg,#F2C4D0 0%,#C8456C 35%,#ECC97A 65%,#F2C4D0 100%);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.06em;line-height:1;opacity:0;animation:fadeUp 1.4s ease 0.9s forwards;margin-bottom:.4rem}
+.sub{font-size:.68rem;font-weight:100;letter-spacing:.5em;color:var(--tm);text-transform:uppercase;opacity:0;animation:fadeUp 1.4s ease 1.1s forwards;margin-bottom:2.8rem}
+
+.sep{display:flex;align-items:center;gap:1.2rem;margin-bottom:2.8rem;opacity:0;animation:fadeUp 1.4s ease 1.3s forwards}
+.sep-line{width:55px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));opacity:.45}
+.sep-line.r{background:linear-gradient(270deg,transparent,var(--gold))}
+.sep-heart{color:var(--rose);font-size:.85rem;animation:pulse-h 2.8s ease-in-out infinite}
+
+.btn{font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:200;letter-spacing:.38em;text-transform:uppercase;color:var(--tl);background:transparent;border:1px solid rgba(200,69,108,.35);padding:.95rem 2.8rem;border-radius:50px;cursor:pointer;transition:all .45s ease;position:relative;overflow:hidden;opacity:0;animation:fadeUp 1.4s ease 1.5s forwards;margin-bottom:.9rem;backdrop-filter:blur(4px)}
+.btn::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,69,108,.15),transparent);opacity:0;transition:opacity .4s}
+.btn:hover{border-color:rgba(200,69,108,.8);color:#fff;transform:translateY(-2px);box-shadow:0 0 30px rgba(200,69,108,.2)}
+.btn:hover::after{opacity:1}
+
+.btn-ghost{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--gold);background:none;border:none;cursor:pointer;opacity:0;animation:fadeUp 1.4s ease 1.7s forwards;letter-spacing:.1em;transition:all .3s;padding:.4rem 1rem}
+.btn-ghost:hover{opacity:.8;letter-spacing:.15em}
+
+/* Lettre */
+#lettre-wrap{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .7s ease}
+#lettre-wrap.on{opacity:1;pointer-events:all}
+#lettre-bg{position:absolute;inset:0;background:rgba(8,2,6,.93);backdrop-filter:blur(12px)}
+#lettre-box{position:relative;z-index:2;width:min(640px,92vw);max-height:82vh;overflow-y:auto;background:linear-gradient(150deg,rgba(45,16,32,.97),rgba(13,4,8,.98));border:1px solid rgba(200,69,108,.18);border-radius:2px;padding:3.5rem 4rem 3.5rem;box-shadow:0 0 100px rgba(123,26,58,.35),0 0 1px rgba(212,168,83,.08);scrollbar-width:thin;scrollbar-color:var(--crimson) transparent}
+#lettre-box::-webkit-scrollbar{width:2px}
+#lettre-box::-webkit-scrollbar-thumb{background:var(--crimson)}
+.l-top{text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--gold);opacity:.4;letter-spacing:.6em;margin-bottom:2.2rem}
+#l-text{font-family:'Cormorant Garamond',serif;font-size:1.12rem;font-weight:300;line-height:2.05;color:var(--tl);white-space:pre-wrap}
+#l-cur{display:inline-block;width:1px;height:1em;background:var(--gold);vertical-align:middle;margin-left:1px;animation:blink .8s steps(1) infinite}
+.btn-close{position:absolute;top:1.1rem;right:1.6rem;background:none;border:none;color:var(--tm);font-size:.68rem;font-family:'Montserrat',sans-serif;font-weight:200;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;opacity:.45;transition:opacity .3s}
+.btn-close:hover{opacity:1}
+
+/* Toast */
+#toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(60px);z-index:200;background:rgba(45,16,32,.88);border:1px solid rgba(212,168,83,.18);border-radius:50px;padding:.55rem 1.4rem;font-size:.68rem;letter-spacing:.22em;color:var(--tm);transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .5s;opacity:0;white-space:nowrap;backdrop-filter:blur(8px)}
+#toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pulse-h{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
 </style>
 </head>
 <body>
-<div class="container">
-    <img id="slideshow" src="photo1.png" class="photo" alt="Photo">
-    <h1>Je t'aime Chloé ❤️</h1>
-    <p>Chaque moment avec toi est un souvenir que je garde précieusement.</p>
-    <button id="mainBtn" onclick="startExperience()">Clique ici 💌</button>
-    <div id="music-status"></div>
-    <div class="message" id="message">
-        Merci d'être dans ma vie ❤️
-    </div>
-    <button id="coeur-btn" onclick="ouvrirLettre()">Mon cœur 💗</button>
+<canvas id="cv-bg"></canvas>
+<canvas id="cv-aurora"></canvas>
+<canvas id="cv-particles"></canvas>
+<div class="vignette"></div>
+
+<div id="ui">
+  <div class="ornament">— Pour toi —</div>
+  <div class="photo-wrap">
+    <div class="ring1"></div><div class="ring2"></div><div class="ring3"></div>
+    <img id="slideshow" class="photo-img" src="photo1.png" alt="Chloé">
+  </div>
+  <h1 class="name">Chloé</h1>
+  <p class="sub">Mon amour &nbsp;·&nbsp; Mon univers</p>
+  <div class="sep">
+    <div class="sep-line"></div>
+    <span class="sep-heart">♥</span>
+    <div class="sep-line r"></div>
+  </div>
+  <button class="btn" id="btn-main" onclick="startExp()">Ouvre ton cœur</button>
+  <button class="btn-ghost" onclick="openLettre()">Lire ma lettre &nbsp;✦</button>
 </div>
 
-<!-- Overlay lettre -->
-<div id="lettre-overlay">
-    <div id="lettre-box">
-        <button id="close-lettre" onclick="fermerLettre()">✕</button>
-        <div id="lettre-text"></div><span id="cursor"></span>
-    </div>
+<div id="lettre-wrap">
+  <div id="lettre-bg" onclick="closeLettre()"></div>
+  <div id="lettre-box">
+    <button class="btn-close" onclick="closeLettre()">✕ fermer</button>
+    <div class="l-top">✦ &nbsp; ✦ &nbsp; ✦</div>
+    <div id="l-text"></div><span id="l-cur"></span>
+  </div>
 </div>
-
-<!-- Mets ton fichier music.mp3 dans le même dossier que ce fichier HTML -->
-<audio id="music" loop preload="auto">
-    <source src="music.mp3" type="audio/mpeg">
-    <source src="music.ogg" type="audio/ogg">
-</audio>
+<div id="toast"></div>
+<audio id="music" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
 
 <script>
-let musicStarted = false;
+// ═══════════════════════════════════════════
+// BACKGROUND CANVAS — Paysage nocturne vivant
+// ═══════════════════════════════════════════
+const bg = document.getElementById('cv-bg');
+const bgx = bg.getContext('2d');
+const au = document.getElementById('cv-aurora');
+const aux = au.getContext('2d');
+const pc = document.getElementById('cv-particles');
+const pcx = pc.getContext('2d');
 
-function startExperience() {
-    const music = document.getElementById("music");
-    const statusEl = document.getElementById("music-status");
-    const btn = document.getElementById("mainBtn");
+let W, H, t = 0;
+function resize() {
+  W = bg.width = au.width = pc.width = window.innerWidth;
+  H = bg.height = au.height = pc.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-    // Affiche le message
-    document.getElementById("message").classList.add("show");
+// ── Étoiles fixes ──
+const stars = [];
+for (let i = 0; i < 320; i++) {
+  stars.push({
+    x: Math.random(),
+    y: Math.random() * 0.65,
+    r: 0.3 + Math.random() * 1.4,
+    a: 0.3 + Math.random() * 0.7,
+    tw: Math.random() * Math.PI * 2,
+    tws: 0.005 + Math.random() * 0.02,
+    color: Math.random() < 0.15 ? '#ECC97A' : Math.random() < 0.2 ? '#F2C4D0' : '#ffffff'
+  });
+}
 
-    // Change le bouton
-    btn.textContent = "❤️";
-    btn.style.fontSize = "1.8rem";
-    btn.style.padding = "12px 25px";
+// ── Météores ──
+const meteors = [];
+function makeMeteor() {
+  return {
+    x: 0.1 + Math.random() * 0.7,
+    y: 0.02 + Math.random() * 0.25,
+    len: 0.06 + Math.random() * 0.12,
+    speed: 0.003 + Math.random() * 0.004,
+    life: 0, maxLife: 0.6 + Math.random() * 0.5,
+    active: false,
+    delay: 2 + Math.random() * 8
+  };
+}
+for (let i = 0; i < 5; i++) meteors.push(makeMeteor());
 
-    if (musicStarted) return;
-
-    const playPromise = music.play();
-
-    if (playPromise !== undefined) {
-        playPromise
-            .then(() => {
-                musicStarted = true;
-                statusEl.textContent = "";
-            })
-            .catch(error => {
-                console.warn("Lecture audio bloquée :", error);
-                statusEl.textContent = "🔇 Clique encore pour lancer la musique";
-                // Deuxième tentative au prochain clic utilisateur
-                btn.onclick = retryMusic;
-            });
+// ── Montagnes (3 couches) ──
+function drawMountains(ctx, seed, yBase, color, layers) {
+  for (let l = 0; l < layers.length; l++) {
+    const lyr = layers[l];
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    let px = 0;
+    while (px <= W + 80) {
+      const nx = px + lyr.step + Math.sin(px * lyr.freq + seed + l * 1.3) * 30;
+      const ny = yBase * H + Math.sin(px * lyr.freq2 + seed * 1.5 + l * 2.1) * lyr.amp * H
+                 + Math.cos(px * lyr.freq3 + seed * 0.7) * lyr.amp2 * H;
+      ctx.lineTo(nx, ny);
+      px = nx;
     }
+    ctx.lineTo(W, H);
+    ctx.closePath();
+    ctx.fillStyle = lyr.color;
+    ctx.fill();
+  }
 }
 
-function retryMusic() {
-    const music = document.getElementById("music");
-    const statusEl = document.getElementById("music-status");
-    const btn = document.getElementById("mainBtn");
-
-    music.play()
-        .then(() => {
-            musicStarted = true;
-            statusEl.textContent = "";
-            btn.onclick = startExperience;
-        })
-        .catch(err => {
-            console.warn("Toujours bloqué :", err);
-            statusEl.textContent = "⚠️ Autorise le son dans ton navigateur.";
-        });
+// ── Lueurs de ville au bas des montagnes ──
+const cityLights = [];
+for (let i = 0; i < 60; i++) {
+  cityLights.push({
+    x: Math.random(),
+    y: 0.76 + Math.random() * 0.05,
+    r: 0.5 + Math.random() * 1.5,
+    a: 0.2 + Math.random() * 0.5,
+    color: Math.random() < 0.4 ? '#ECC97A' : Math.random() < 0.5 ? '#F2C4D0' : '#C8456C',
+    tw: Math.random() * Math.PI * 2,
+    tws: 0.01 + Math.random() * 0.04
+  });
 }
 
-// Slideshow photos
-const photos = ["photo1.png", "photo2.jpg", "photo3.jpg"];
-let currentPhoto = 0;
+// ── Rivière / reflet ──
+function drawRiver(ctx, t) {
+  const ry = H * 0.78;
+  const rh = H * 0.05;
+  const grad = ctx.createLinearGradient(0, ry, 0, ry + rh);
+  grad.addColorStop(0, 'rgba(123,26,58,0.18)');
+  grad.addColorStop(0.5, 'rgba(200,69,108,0.08)');
+  grad.addColorStop(1, 'rgba(13,4,8,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(0, ry);
+  for (let x = 0; x <= W; x += 4) {
+    const wave = Math.sin(x * 0.015 + t * 0.8) * 3 + Math.sin(x * 0.03 + t * 1.2) * 1.5;
+    ctx.lineTo(x, ry + wave);
+  }
+  ctx.lineTo(W, ry + rh);
+  ctx.lineTo(0, ry + rh);
+  ctx.closePath();
+  ctx.fill();
+
+  // Reflet lune
+  const lx = W * 0.72, ly = H * 0.18;
+  const reflGrad = ctx.createRadialGradient(lx, ry + 8, 0, lx, ry + 8, 60);
+  reflGrad.addColorStop(0, 'rgba(212,168,83,0.12)');
+  reflGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = reflGrad;
+  ctx.beginPath();
+  ctx.ellipse(lx, ry + 8, 60, 12, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// ── Lune ──
+function drawMoon(ctx, t) {
+  const lx = W * 0.72, ly = H * 0.18;
+  // Halo
+  const halo = ctx.createRadialGradient(lx, ly, 20, lx, ly, 90);
+  halo.addColorStop(0, 'rgba(212,168,83,0.12)');
+  halo.addColorStop(0.5, 'rgba(212,168,83,0.04)');
+  halo.addColorStop(1, 'transparent');
+  ctx.fillStyle = halo;
+  ctx.beginPath(); ctx.arc(lx, ly, 90, 0, Math.PI * 2); ctx.fill();
+
+  // Corps lune
+  ctx.save();
+  ctx.shadowColor = 'rgba(212,168,83,0.6)';
+  ctx.shadowBlur = 20;
+  const moonGrad = ctx.createRadialGradient(lx - 6, ly - 6, 2, lx, ly, 28);
+  moonGrad.addColorStop(0, '#FFF5DC');
+  moonGrad.addColorStop(0.6, '#ECC97A');
+  moonGrad.addColorStop(1, '#C89A3A');
+  ctx.fillStyle = moonGrad;
+  ctx.beginPath(); ctx.arc(lx, ly, 28, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+
+  // Ombre croissant
+  ctx.fillStyle = 'rgba(13,4,8,0.55)';
+  ctx.beginPath(); ctx.arc(lx + 10, ly - 4, 26, 0, Math.PI * 2); ctx.fill();
+}
+
+// ── Aurora / Aurore ──
+function drawAurora(ctx, t) {
+  ctx.clearRect(0, 0, W, H);
+  const bands = [
+    {cy: 0.22, color1:'rgba(123,26,58,', color2:'rgba(74,14,34,', amp:0.06, freq:0.0018, speed:0.25},
+    {cy: 0.28, color1:'rgba(165,32,80,', color2:'rgba(200,69,108,', amp:0.05, freq:0.002, speed:0.18},
+    {cy: 0.18, color1:'rgba(212,168,83,', color2:'rgba(165,32,80,', amp:0.04, freq:0.0025, speed:0.3},
+  ];
+  bands.forEach(b => {
+    for (let x = 0; x < W; x += 2) {
+      const wave1 = Math.sin(x * b.freq + t * b.speed) * b.amp * H;
+      const wave2 = Math.sin(x * b.freq * 1.7 + t * b.speed * 1.3 + 1.2) * b.amp * 0.5 * H;
+      const cy = b.cy * H + wave1 + wave2;
+      const height = (0.04 + Math.sin(x * 0.003 + t * 0.2) * 0.02) * H;
+      const alpha = 0.04 + Math.sin(x * 0.005 + t * 0.4) * 0.025;
+      const grad = ctx.createLinearGradient(x, cy - height, x, cy + height);
+      grad.addColorStop(0, b.color1 + '0)');
+      grad.addColorStop(0.5, b.color2 + alpha + ')');
+      grad.addColorStop(1, b.color1 + '0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(x, cy - height, 2, height * 2);
+    }
+  });
+}
+
+// ── Arbres silhouette ──
+function drawTree(ctx, x, y, h, w) {
+  ctx.beginPath();
+  // Tronc
+  ctx.rect(x - w * 0.06, y, w * 0.12, h * 0.3);
+  ctx.fill();
+  // Feuillage triangles
+  ctx.beginPath();
+  ctx.moveTo(x, y - h * 0.5);
+  ctx.lineTo(x - w * 0.5, y + h * 0.1);
+  ctx.lineTo(x + w * 0.5, y + h * 0.1);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(x, y - h * 0.75);
+  ctx.lineTo(x - w * 0.38, y - h * 0.15);
+  ctx.lineTo(x + w * 0.38, y - h * 0.15);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(x, y - h);
+  ctx.lineTo(x - w * 0.25, y - h * 0.45);
+  ctx.lineTo(x + w * 0.25, y - h * 0.45);
+  ctx.closePath();
+  ctx.fill();
+}
+
+const treeData = [];
+for (let i = 0; i < 22; i++) {
+  const side = i < 8 ? 'left' : i < 16 ? 'right' : 'mid';
+  treeData.push({
+    x: side === 'left' ? 0.02 + Math.random() * 0.18
+       : side === 'right' ? 0.8 + Math.random() * 0.18
+       : 0.2 + Math.random() * 0.6,
+    yBase: 0.72 + Math.random() * 0.06,
+    h: 0.06 + Math.random() * 0.1,
+    w: 0.025 + Math.random() * 0.02,
+    layer: Math.floor(Math.random() * 3),
+    sway: Math.random() * Math.PI * 2,
+    swayS: 0.003 + Math.random() * 0.005
+  });
+}
+
+// ── Brume basse ──
+function drawMist(ctx, t) {
+  for (let i = 0; i < 5; i++) {
+    const my = H * (0.75 + i * 0.022);
+    const grad = ctx.createLinearGradient(0, my - 18, 0, my + 18);
+    grad.addColorStop(0, 'transparent');
+    grad.addColorStop(0.5, `rgba(212,168,83,${0.012 + Math.sin(t * 0.3 + i) * 0.006})`);
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    for (let x = 0; x <= W; x += 6) {
+      const y = my + Math.sin(x * 0.008 + t * 0.2 + i * 1.1) * 8;
+      x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, my + 18); ctx.lineTo(0, my + 18); ctx.closePath();
+    ctx.fill();
+  }
+}
+
+// ── Particules romantiques ──
+const SYMS = ['♥','✦','·','◇','✧','❧','∘'];
+const PCOLS = ['rgba(200,69,108,','rgba(212,168,83,','rgba(165,32,80,','rgba(242,196,208,','rgba(123,26,58,'];
+const parts = [];
+function makePart() {
+  const hrt = Math.random() < 0.18;
+  return {
+    x: Math.random() * W, y: H + 20 + Math.random() * 60,
+    vx: (Math.random()-.5)*.45, vy: -(0.35 + Math.random() * .8),
+    alpha: 0.08 + Math.random() * .55,
+    size: hrt ? 10 + Math.random() * 20 : 3 + Math.random() * 13,
+    sym: hrt ? '♥' : SYMS[Math.floor(Math.random() * SYMS.length)],
+    col: PCOLS[Math.floor(Math.random() * PCOLS.length)],
+    ang: Math.random() * Math.PI * 2,
+    twist: (Math.random()-.5) * .012,
+    drift: Math.random() * Math.PI * 2,
+    driftS: .006 + Math.random() * .008
+  };
+}
+for (let i = 0; i < 90; i++) { const p = makePart(); p.y = Math.random() * H; parts.push(p); }
+
+let mx = -999, my = -999;
+window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+// ══ BOUCLE PRINCIPALE ══
+function loop() {
+  t += 0.012;
+
+  // ── Fond ciel ──
+  bgx.clearRect(0, 0, W, H);
+  const sky = bgx.createLinearGradient(0, 0, 0, H * 0.82);
+  sky.addColorStop(0, '#050108');
+  sky.addColorStop(0.25, '#0D0412');
+  sky.addColorStop(0.55, '#1A0820');
+  sky.addColorStop(0.75, '#2D1020');
+  sky.addColorStop(0.88, '#3D1428');
+  sky.addColorStop(1, '#4A1830');
+  bgx.fillStyle = sky;
+  bgx.fillRect(0, 0, W, H);
+
+  // Horizon glow
+  const hglow = bgx.createLinearGradient(0, H * 0.68, 0, H * 0.82);
+  hglow.addColorStop(0, 'rgba(123,26,58,0)');
+  hglow.addColorStop(0.5, 'rgba(123,26,58,0.12)');
+  hglow.addColorStop(1, 'rgba(200,69,108,0.08)');
+  bgx.fillStyle = hglow;
+  bgx.fillRect(0, H * 0.68, W, H * 0.14);
+
+  // ── Étoiles ──
+  stars.forEach(s => {
+    s.tw += s.tws;
+    const a = s.a * (0.6 + Math.sin(s.tw) * 0.4);
+    bgx.save();
+    bgx.globalAlpha = a;
+    bgx.fillStyle = s.color;
+    bgx.shadowColor = s.color;
+    bgx.shadowBlur = s.r > 1.1 ? 4 : 0;
+    bgx.beginPath();
+    bgx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+    bgx.fill();
+    bgx.restore();
+  });
+
+  // ── Météores ──
+  meteors.forEach(m => {
+    m.delay -= 0.016;
+    if (m.delay <= 0 && !m.active) { m.active = true; m.life = 0; }
+    if (m.active) {
+      m.life += 0.016;
+      const progress = m.life / m.maxLife;
+      const alpha = progress < 0.1 ? progress * 10 : progress > 0.7 ? (1 - progress) / 0.3 : 1;
+      const ex = m.x * W + progress * m.len * W;
+      const ey = m.y * H + progress * m.len * H * 0.4;
+      const sx = ex - m.len * W * 0.4;
+      const sy = ey - m.len * H * 0.16;
+      const mg = bgx.createLinearGradient(sx, sy, ex, ey);
+      mg.addColorStop(0, 'transparent');
+      mg.addColorStop(1, `rgba(242,196,208,${alpha * 0.9})`);
+      bgx.strokeStyle = mg; bgx.lineWidth = 1.5;
+      bgx.beginPath(); bgx.moveTo(sx, sy); bgx.lineTo(ex, ey); bgx.stroke();
+      if (m.life >= m.maxLife) { Object.assign(m, makeMeteor()); m.active = false; }
+    }
+  });
+
+  // ── Lune ──
+  drawMoon(bgx, t);
+
+  // ── Aurora ──
+  drawAurora(aux, t);
+
+  // ── Montagnes couche 3 (lointaine) ──
+  bgx.save();
+  drawMountains(bgx, 0.5, 0, '', [{
+    step: 8, freq: 0.0025, freq2: 0.0012, freq3: 0.005,
+    amp: 0.065, amp2: 0.02,
+    color: 'rgba(30,8,18,0.75)'
+  }]);
+  bgx.restore();
+
+  // ── Montagnes couche 2 (milieu) ──
+  bgx.save();
+  drawMountains(bgx, 1.2, 0, '', [{
+    step: 6, freq: 0.0035, freq2: 0.0018, freq3: 0.007,
+    amp: 0.09, amp2: 0.03,
+    color: 'rgba(20,5,12,0.9)'
+  }]);
+  bgx.restore();
+
+  // ── Sol + arbres arrière ──
+  // Sol dégradé
+  const soil = bgx.createLinearGradient(0, H * 0.73, 0, H);
+  soil.addColorStop(0, '#1A0810');
+  soil.addColorStop(0.3, '#120509');
+  soil.addColorStop(1, '#0A0306');
+  bgx.fillStyle = soil;
+  bgx.fillRect(0, H * 0.73, W, H * 0.27);
+
+  // Silhouette forêt arrière
+  bgx.fillStyle = 'rgba(12,3,8,0.9)';
+  treeData.filter(t => t.layer === 2).forEach(tr => {
+    tr.sway += tr.swayS;
+    const sx = Math.sin(tr.sway) * 1.5;
+    bgx.save(); bgx.translate(sx, 0);
+    drawTree(bgx, tr.x * W, tr.yBase * H, tr.h * H, tr.w * W);
+    bgx.restore();
+  });
+
+  // ── Rivière / reflets ──
+  drawRiver(bgx, t);
+
+  // Silhouette forêt avant
+  bgx.fillStyle = 'rgba(6,2,4,0.97)';
+  treeData.filter(tr => tr.layer === 0).forEach(tr => {
+    tr.sway += tr.swayS;
+    const sx = Math.sin(tr.sway) * 2;
+    bgx.save(); bgx.translate(sx, 0);
+    drawTree(bgx, tr.x * W, tr.yBase * H, tr.h * H * 1.2, tr.w * W * 1.15);
+    bgx.restore();
+  });
+
+  // ── Brume ──
+  drawMist(bgx, t);
+
+  // Bande sol sombre
+  bgx.fillStyle = bgx.createLinearGradient(0, H * 0.92, 0, H);
+  const fg = bgx.createLinearGradient(0, H * 0.92, 0, H);
+  fg.addColorStop(0, 'rgba(5,1,3,0)');
+  fg.addColorStop(1, 'rgba(5,1,3,0.95)');
+  bgx.fillStyle = fg;
+  bgx.fillRect(0, H * 0.92, W, H * 0.08);
+
+  // Lueurs cité
+  cityLights.forEach(cl => {
+    cl.tw += cl.tws;
+    const a = cl.a * (0.6 + Math.sin(cl.tw) * 0.4);
+    bgx.save();
+    bgx.globalAlpha = a;
+    bgx.shadowColor = cl.color;
+    bgx.shadowBlur = 6;
+    bgx.fillStyle = cl.color;
+    bgx.beginPath();
+    bgx.arc(cl.x * W, cl.y * H, cl.r, 0, Math.PI * 2);
+    bgx.fill();
+    bgx.restore();
+  });
+
+  // ── Particules romantiques ──
+  pcx.clearRect(0, 0, W, H);
+  parts.forEach(p => {
+    p.drift += p.driftS;
+    p.x += p.vx + Math.sin(p.drift) * 0.35;
+    p.y += p.vy;
+    p.ang += p.twist;
+    const dx = p.x - mx, dy = p.y - my, dist = Math.hypot(dx, dy);
+    if (dist < 130) { p.x += (dx / dist) * 1.1; p.y += (dy / dist) * 1.1; }
+    if (p.y < -80) { Object.assign(p, makePart()); }
+    pcx.save();
+    pcx.globalAlpha = p.alpha;
+    pcx.font = `${p.size}px serif`;
+    pcx.fillStyle = p.col + '0.95)';
+    pcx.translate(p.x, p.y);
+    pcx.rotate(p.ang);
+    pcx.fillText(p.sym, 0, 0);
+    pcx.restore();
+  });
+
+  requestAnimationFrame(loop);
+}
+loop();
+
+// ── Slideshow ──
+const PHOTOS = ['photo1.png','photo2.jpg','photo3.jpg'];
+let pi = 0;
 setInterval(() => {
-    currentPhoto = (currentPhoto + 1) % photos.length;
-    const img = document.getElementById("slideshow");
-    img.style.opacity = "0";
-    img.style.transition = "opacity 0.5s";
-    setTimeout(() => {
-        img.src = photos[currentPhoto];
-        img.style.opacity = "1";
-    }, 500);
-}, 3000);
+  pi = (pi + 1) % PHOTOS.length;
+  const img = document.getElementById('slideshow');
+  img.style.transition = 'opacity .8s ease';
+  img.style.opacity = '0';
+  setTimeout(() => { img.src = PHOTOS[pi]; img.style.opacity = '1'; }, 800);
+}, 4500);
 
-// Lettre typewriter
-const lettreTexte = `Chloé,
-
-On dit que l’amour est cette étrange force qui transforme le simple en éternel. Et depuis que ton nom habite mes pensées, je comprends mieux ces mots que les poètes poursuivaient sans fin.
-
-Comme l’écrivait Victor Hugo, « aimer, c’est agir » ; alors je t’écris, parce que mon cœur trouve dans tes silences plus de vérité que dans mille discours.
-
-Il y a dans ton prénom une douceur qui ressemble au printemps, une lumière calme qui traverse mes jours comme un soleil après l’orage.
-Et si Paul Éluard disait que « la courbe de tes yeux fait le tour de mon cœur », je crois que ton sourire, lui, a trouvé le chemin du mien sans jamais se perdre.
-
-Tu es cette rare présence qui rend le temps plus léger, cette évidence que l’on ne cherche pas mais que l’on reconnaît dès qu’elle apparaît.
-
-L’amour ne consiste pas à se regarder l’un l’autre, mais à regarder ensemble dans la même direction.
-Avec toi, j’ai l’impression que même l’horizon devient plus beau.
-
-Chloé, il existe des personnes qui marquent une vie comme une phrase inoubliable dans un livre qu’on relit sans cesse.
-Pour moi, tu es cette phrase.
-
-Et s’il fallait résumer tout ce que je ressens en quelques mots, ce serait simplement ceci :
-dans le grand désordre du monde, ton existence est l’une de mes plus belles certitudes.`;
-
-let typewriterTimeout = null;
-let lettreOuverte = false;
-
-function ouvrirLettre() {
-    if (lettreOuverte) return;
-    lettreOuverte = true;
-    const overlay = document.getElementById('lettre-overlay');
-    const textEl = document.getElementById('lettre-text');
-    const cursor = document.getElementById('cursor');
-    overlay.classList.add('active');
-    textEl.textContent = '';
-    cursor.style.display = 'inline-block';
-    let i = 0;
-    function type() {
-        if (i < lettreTexte.length) {
-            textEl.textContent += lettreTexte[i];
-            i++;
-            const delay = lettreTexte[i - 1] === '\n' ? 120 :
-                          '.!?,'.includes(lettreTexte[i - 1]) ? 200 + Math.random() * 150 :
-                          40 + Math.random() * 40;
-            typewriterTimeout = setTimeout(type, delay);
-        } else {
-            cursor.style.display = 'none';
-        }
-    }
-    type();
+// ── Expérience / musique ──
+let musicOn = false;
+function startExp() {
+  const btn = document.getElementById('btn-main');
+  btn.innerHTML = '♥';
+  btn.style.fontSize = '1.5rem';
+  btn.style.letterSpacing = '0';
+  if (musicOn) return;
+  const m = document.getElementById('music');
+  m.play().then(() => { musicOn = true; showToast('♪ Musique activée'); })
+         .catch(() => { showToast('♪ Clique encore pour la musique'); btn.onclick = () => { m.play().then(() => { musicOn = true; showToast('♪ En route ♪'); }); }; });
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 3200);
 }
 
-function fermerLettre() {
-    clearTimeout(typewriterTimeout);
-    lettreOuverte = false;
-    document.getElementById('lettre-overlay').classList.remove('active');
-    document.getElementById('lettre-text').textContent = '';
-    document.getElementById('cursor').style.display = 'inline-block';
-}
+// ── Lettre ──
+const LETTRE = `Chloé,
 
-// Coeurs qui tombent
-for (let i = 0; i < 70; i++) {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.top = "-50px";
-    heart.style.animationDuration = (3 + Math.random() * 6) + "s";
-    heart.style.animationDelay = (Math.random() * 8) + "s";
-    heart.style.fontSize = (15 + Math.random() * 35) + "px";
-    heart.style.opacity = (0.4 + Math.random() * 0.6).toString();
-    document.body.appendChild(heart);
+On dit que l'amour est cette étrange force qui transforme le simple en éternel. Et depuis que ton nom habite mes pensées, je comprends mieux ces mots que les poètes poursuivaient sans fin.
+
+Comme l'écrivait Victor Hugo, « aimer, c'est agir » — alors je t'écris, parce que mon cœur trouve dans tes silences plus de vérité que dans mille discours.
+
+Il y a dans ton prénom une douceur qui ressemble au printemps, une lumière calme qui traverse mes jours comme un soleil après l'orage. Et si Paul Éluard disait que « la courbe de tes yeux fait le tour de mon cœur », je crois que ton sourire, lui, a trouvé le chemin du mien sans jamais se perdre.
+
+Tu es cette rare présence qui rend le temps plus léger, cette évidence que l'on ne cherche pas mais que l'on reconnaît dès qu'elle apparaît.
+
+L'amour ne consiste pas à se regarder l'un l'autre, mais à regarder ensemble dans la même direction. Avec toi, j'ai l'impression que même l'horizon devient plus beau.
+
+Chloé, il existe des personnes qui marquent une vie comme une phrase inoubliable dans un livre qu'on relit sans cesse. Pour moi, tu es cette phrase.
+
+Et s'il fallait résumer tout ce que je ressens en quelques mots, ce serait simplement ceci :
+
+dans le grand désordre du monde, ton existence est l'une de mes plus belles certitudes.
+
+                                                         ♥`;
+
+let ltTO = null, ltOpen = false;
+function openLettre() {
+  if (ltOpen) return; ltOpen = true;
+  document.getElementById('lettre-wrap').classList.add('on');
+  const el = document.getElementById('l-text');
+  const cur = document.getElementById('l-cur');
+  el.textContent = ''; cur.style.display = 'inline-block';
+  let i = 0;
+  (function type() {
+    if (i < LETTRE.length) {
+      el.textContent += LETTRE[i]; i++;
+      const ch = LETTRE[i-1];
+      const d = ch==='\n'?75:'.!?,;:'.includes(ch)?160+Math.random()*100:22+Math.random()*24;
+      ltTO = setTimeout(type, d);
+    } else { cur.style.display = 'none'; }
+  })();
+}
+function closeLettre() {
+  clearTimeout(ltTO); ltOpen = false;
+  document.getElementById('lettre-wrap').classList.remove('on');
+  document.getElementById('l-text').textContent = '';
+  document.getElementById('l-cur').style.display = 'inline-block';
 }
 </script>
 </body>
