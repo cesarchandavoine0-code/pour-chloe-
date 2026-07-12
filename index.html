@@ -3,383 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D0408">
 <title>Pour Chloé</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
- 
-body {
-  width: 100vw; height: 100vh; overflow: hidden;
-  background: #0D0408; font-family: 'Montserrat', sans-serif; color: #F9EEF3;
-}
-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-#cv-main { z-index: 1; } #cv-parts { z-index: 2; }
- 
-.vignette {
-  position: fixed; inset: 0; z-index: 4;
-  background: radial-gradient(ellipse 88% 88% at 50% 50%, transparent 28%, rgba(6,1,4,0.72) 100%);
-  pointer-events: none;
-}
- 
-#ui {
-  position: fixed; inset: 0; z-index: 10;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 1.5rem; pointer-events: none;
-}
-#ui > * { pointer-events: all; }
- 
-.ornament {
-  font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; color: #D4A853;
-  letter-spacing: 0.45em; text-transform: uppercase;
-  opacity: 0; animation: fadeup 1.2s ease 0.2s forwards; margin-bottom: 1.2rem;
-}
- 
-.photo-wrap {
-  position: relative; width: 170px; height: 170px; margin-bottom: 1.8rem;
-  opacity: 0; animation: fadeup 1.2s ease 0.5s forwards;
-}
-.ring {
-  position: absolute; border-radius: 50%; top: 50%; left: 50%;
-  transform: translate(-50%, -50%); animation: spin linear infinite;
-}
-.ring1 { width: 194px; height: 194px; border: 1px solid rgba(212,168,83,0.35); animation-duration: 22s; }
-.ring2 { width: 214px; height: 214px; border: 1px dashed rgba(200,69,108,0.22); animation-duration: 38s; animation-direction: reverse; }
-.ring3 { width: 234px; height: 234px; border: 1px solid rgba(242,196,208,0.09); animation-duration: 55s; }
- 
-.photo-img {
-  width: 170px; height: 170px; border-radius: 50%; object-fit: cover;
-  border: 2px solid rgba(212,168,83,0.45);
-  box-shadow: 0 0 50px rgba(123,26,58,0.55), 0 0 100px rgba(123,26,58,0.2);
-  background: linear-gradient(135deg, #4A0E22, #7B1A3A); display: block;
-}
- 
-.name {
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
-  font-size: clamp(3.8rem, 11vw, 7rem);
-  background: linear-gradient(135deg, #F2C4D0 0%, #C8456C 38%, #ECC97A 68%, #F2C4D0 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  letter-spacing: 0.06em; line-height: 1;
-  opacity: 0; animation: fadeup 1.2s ease 0.8s forwards; margin-bottom: 0.45rem;
-}
- 
-.sub {
-  font-size: 0.65rem; font-weight: 100; letter-spacing: 0.5em; color: #D4A0B5;
-  text-transform: uppercase; opacity: 0; animation: fadeup 1.2s ease 1s forwards; margin-bottom: 2.6rem;
-}
- 
-.sep {
-  display: flex; align-items: center; gap: 1rem; margin-bottom: 2.6rem;
-  opacity: 0; animation: fadeup 1.2s ease 1.2s forwards;
-}
-.sep-line { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,83,0.45)); }
-.sep-line.r { background: linear-gradient(270deg, transparent, rgba(212,168,83,0.45)); }
-.sep-heart { color: #C8456C; font-size: 0.85rem; animation: pulseh 2.8s ease-in-out infinite; display: inline-block; }
- 
-.btn-main {
-  font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 200;
-  letter-spacing: 0.38em; text-transform: uppercase; color: #F9EEF3;
-  background: transparent; border: 1px solid rgba(200,69,108,0.38);
-  padding: 0.95rem 2.8rem; border-radius: 50px; cursor: pointer;
-  transition: all 0.4s ease; opacity: 0; animation: fadeup 1.2s ease 1.4s forwards;
-  margin-bottom: 0.85rem; backdrop-filter: blur(4px);
-}
-.btn-main:hover { border-color: #C8456C; color: #fff; transform: translateY(-2px); box-shadow: 0 0 28px rgba(200,69,108,0.22); }
- 
-.btn-lettre {
-  font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem;
-  color: #D4A853; background: none; border: none; cursor: pointer; letter-spacing: 0.1em;
-  opacity: 0; animation: fadeup 1.2s ease 1.6s forwards; transition: all 0.3s ease; padding: 0.4rem 1rem;
-}
-.btn-lettre:hover { opacity: 0.8; letter-spacing: 0.16em; }
- 
-/* ── BOUTON MESSAGERIE ── */
-#btn-msg {
-  position: fixed; bottom: 2rem; right: 2rem; z-index: 50;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #7B1A3A, #C8456C);
-  border: 1px solid rgba(212,168,83,0.3);
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; box-shadow: 0 0 24px rgba(200,69,108,0.4);
-  transition: all 0.3s ease; opacity: 0; animation: fadeup 1.2s ease 2s forwards;
-}
-#btn-msg:hover { transform: scale(1.1); box-shadow: 0 0 36px rgba(200,69,108,0.6); }
-#msg-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: #D4A853; color: #0D0408; border-radius: 50%;
-  width: 18px; height: 18px; font-size: 0.55rem; font-weight: 700;
-  display: none; align-items: center; justify-content: center;
-}
- 
-/* ── OVERLAY MESSAGERIE ── */
-#msg-wrap {
-  position: fixed; inset: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
-}
-#msg-wrap.on { opacity: 1; pointer-events: all; }
- 
-#msg-bg {
-  position: absolute; inset: 0;
-  background: rgba(8,2,6,0.92); backdrop-filter: blur(12px);
-}
- 
-#msg-box {
-  position: relative; z-index: 2;
-  width: min(560px, 94vw); height: min(680px, 88vh);
-  background: linear-gradient(155deg, rgba(38,12,26,0.97), rgba(10,3,7,0.99));
-  border: 1px solid rgba(200,69,108,0.2); border-radius: 6px;
-  box-shadow: 0 0 80px rgba(123,26,58,0.35);
-  display: flex; flex-direction: column; overflow: hidden;
-}
- 
-#msg-header {
-  padding: 1.2rem 1.6rem; border-bottom: 1px solid rgba(200,69,108,0.12);
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(123,26,58,0.08);
-}
-#msg-header-title {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 1.2rem; color: #F2C4D0; letter-spacing: 0.08em;
-}
-#msg-header-sub { font-size: 0.55rem; letter-spacing: 0.2em; color: #D4A0B5; margin-top: 2px; }
-.btn-close-msg {
-  background: none; border: none; color: #D4A0B5; font-size: 0.6rem;
-  font-family: 'Montserrat', sans-serif; letter-spacing: 0.2em;
-  text-transform: uppercase; cursor: pointer; opacity: 0.5; transition: opacity 0.3s;
-}
-.btn-close-msg:hover { opacity: 1; }
- 
-/* Zone identité */
-#msg-identity {
-  padding: 0.8rem 1.6rem; border-bottom: 1px solid rgba(200,69,108,0.1);
-  display: flex; align-items: center; gap: 0.6rem;
-}
-#identity-label { font-size: 0.55rem; letter-spacing: 0.18em; color: #D4A0B5; text-transform: uppercase; }
-#identity-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: #D4A853; }
-#btn-switch-id {
-  margin-left: auto; font-size: 0.52rem; letter-spacing: 0.15em; color: #D4A0B5;
-  background: none; border: 1px solid rgba(200,69,108,0.2); padding: 0.25rem 0.7rem;
-  border-radius: 20px; cursor: pointer; transition: all 0.3s; text-transform: uppercase;
-}
-#btn-switch-id:hover { border-color: #C8456C; color: #F9EEF3; }
- 
-/* Messages */
-#msg-list {
-  flex: 1; overflow-y: auto; padding: 1.2rem 1.4rem;
-  display: flex; flex-direction: column; gap: 0.9rem;
-  scrollbar-width: thin; scrollbar-color: #7B1A3A transparent;
-}
-#msg-list::-webkit-scrollbar { width: 2px; }
-#msg-list::-webkit-scrollbar-thumb { background: #7B1A3A; }
- 
-.msg-empty {
-  text-align: center; margin: auto;
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 1rem; color: rgba(212,168,83,0.35); line-height: 2;
-}
- 
-.msg-bubble {
-  max-width: 78%; display: flex; flex-direction: column; gap: 0.2rem;
-}
-.msg-bubble.me { align-self: flex-end; align-items: flex-end; }
-.msg-bubble.her { align-self: flex-start; align-items: flex-start; }
- 
-.msg-sender {
-  font-size: 0.5rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: #D4A0B5; margin-bottom: 0.1rem;
-}
-.msg-bubble.me .msg-sender { color: #D4A853; }
- 
-.msg-text {
-  font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 300;
-  line-height: 1.6; padding: 0.7rem 1.05rem; border-radius: 4px;
-}
-.msg-bubble.me .msg-text {
-  background: linear-gradient(135deg, rgba(123,26,58,0.55), rgba(200,69,108,0.35));
-  border: 1px solid rgba(200,69,108,0.25); color: #F9EEF3;
-}
-.msg-bubble.her .msg-text {
-  background: linear-gradient(135deg, rgba(45,16,32,0.7), rgba(80,25,50,0.5));
-  border: 1px solid rgba(212,168,83,0.15); color: #F2C4D0;
-}
-.msg-time { font-size: 0.48rem; letter-spacing: 0.12em; color: rgba(209,160,181,0.45); }
- 
-/* Input */
-#msg-input-area {
-  padding: 1rem 1.2rem; border-top: 1px solid rgba(200,69,108,0.12);
-  display: flex; gap: 0.7rem; align-items: flex-end;
-  background: rgba(20,5,12,0.6);
-}
-#msg-textarea {
-  flex: 1; background: rgba(45,16,32,0.6); border: 1px solid rgba(200,69,108,0.2);
-  border-radius: 4px; color: #F9EEF3; font-family: 'Cormorant Garamond', serif;
-  font-size: 0.95rem; padding: 0.65rem 0.9rem; resize: none; min-height: 42px; max-height: 110px;
-  line-height: 1.5; outline: none; transition: border-color 0.3s;
-  scrollbar-width: thin; scrollbar-color: #7B1A3A transparent;
-}
-#msg-textarea:focus { border-color: rgba(200,69,108,0.5); }
-#msg-textarea::placeholder { color: rgba(209,160,181,0.35); font-style: italic; }
-#btn-send {
-  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, #7B1A3A, #C8456C);
-  border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; transition: all 0.3s; color: #fff;
-  box-shadow: 0 0 12px rgba(200,69,108,0.3);
-}
-#btn-send:hover { transform: scale(1.08); box-shadow: 0 0 20px rgba(200,69,108,0.5); }
- 
-/* ── PIN overlay ── */
-#pin-wrap {
-  position: fixed; inset: 0; z-index: 200;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.4s;
-}
-#pin-wrap.on { opacity: 1; pointer-events: all; }
-#pin-bg { position: absolute; inset: 0; background: rgba(8,2,6,0.94); backdrop-filter: blur(14px); }
-#pin-box {
-  position: relative; z-index: 2; text-align: center;
-  background: linear-gradient(155deg, rgba(45,16,32,0.97), rgba(13,4,8,0.99));
-  border: 1px solid rgba(200,69,108,0.2); border-radius: 6px;
-  padding: 2.8rem 3rem; width: min(320px, 88vw);
-  box-shadow: 0 0 60px rgba(123,26,58,0.3);
-}
-#pin-title {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
-  font-size: 1.3rem; color: #F2C4D0; margin-bottom: 0.4rem;
-}
-#pin-sub { font-size: 0.55rem; letter-spacing: 0.2em; color: #D4A0B5; text-transform: uppercase; margin-bottom: 1.8rem; }
-#pin-dots { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 1.6rem; }
-.pin-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  border: 1px solid rgba(200,69,108,0.5); background: transparent; transition: all 0.2s;
-}
-.pin-dot.filled { background: #C8456C; border-color: #C8456C; box-shadow: 0 0 8px rgba(200,69,108,0.6); }
-#pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1rem; }
-.pin-key {
-  height: 48px; background: rgba(45,16,32,0.6); border: 1px solid rgba(200,69,108,0.18);
-  border-radius: 4px; color: #F9EEF3; font-family: 'Montserrat', sans-serif;
-  font-size: 1rem; font-weight: 200; cursor: pointer; transition: all 0.2s;
-}
-.pin-key:hover { background: rgba(123,26,58,0.5); border-color: rgba(200,69,108,0.4); }
-.pin-key:active { transform: scale(0.95); }
-#pin-error { font-size: 0.6rem; color: #C8456C; letter-spacing: 0.15em; height: 1rem; margin-top: 0.4rem; }
-#btn-pin-cancel {
-  font-size: 0.55rem; letter-spacing: 0.18em; color: #D4A0B5; text-transform: uppercase;
-  background: none; border: none; cursor: pointer; margin-top: 1rem; opacity: 0.6; transition: opacity 0.3s;
-}
-#btn-pin-cancel:hover { opacity: 1; }
- 
-/* ── LETTRE overlay ── */
-#lettre-wrap {
-  position: fixed; inset: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.65s ease;
-}
-#lettre-wrap.on { opacity: 1; pointer-events: all; }
-#lettre-bg { position: absolute; inset: 0; background: rgba(8,2,6,0.91); backdrop-filter: blur(10px); }
-#lettre-box {
-  position: relative; z-index: 2; width: min(620px, 92vw); max-height: 82vh;
-  overflow-y: auto;
-  background: linear-gradient(155deg, rgba(45,16,32,0.96), rgba(13,4,8,0.98));
-  border: 1px solid rgba(200,69,108,0.18); border-radius: 3px; padding: 3.5rem 3.8rem 3.2rem;
-  box-shadow: 0 0 90px rgba(123,26,58,0.32);
-  scrollbar-width: thin; scrollbar-color: #7B1A3A transparent;
-}
-#lettre-box::-webkit-scrollbar { width: 2px; }
-#lettre-box::-webkit-scrollbar-thumb { background: #7B1A3A; }
-.l-ornament {
-  text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
-  color: #D4A853; opacity: 0.4; letter-spacing: 0.6em; margin-bottom: 2rem;
-}
-#l-text {
-  font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300;
-  line-height: 2.05; color: #F9EEF3; white-space: pre-wrap;
-}
-#l-cursor {
-  display: inline-block; width: 1px; height: 1em; background: #D4A853;
-  vertical-align: middle; margin-left: 1px; animation: blink 0.8s steps(1) infinite;
-}
-.btn-close {
-  position: absolute; top: 1rem; right: 1.5rem; background: none; border: none;
-  color: #D4A0B5; font-size: 0.65rem; font-family: 'Montserrat', sans-serif;
-  font-weight: 200; letter-spacing: 0.2em; text-transform: uppercase;
-  cursor: pointer; opacity: 0.45; transition: opacity 0.3s;
-}
-.btn-close:hover { opacity: 1; }
- 
-/* ── TOAST ── */
-#toast {
-  position: fixed; bottom: 2rem; left: 50%;
-  transform: translateX(-50%) translateY(70px); z-index: 300;
-  background: rgba(45,16,32,0.88); border: 1px solid rgba(212,168,83,0.18);
-  border-radius: 50px; padding: 0.55rem 1.4rem;
-  font-size: 0.65rem; letter-spacing: 0.22em; color: #D4A0B5;
-  opacity: 0; white-space: nowrap;
-  transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
-  backdrop-filter: blur(8px);
-}
-#toast.on { transform: translateX(-50%) translateY(0); opacity: 1; }
- 
-@keyframes fadeup { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
-@keyframes pulseh { 0%,100% { transform: scale(1); } 50% { transform: scale(1.22); } }
-@keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
- 
+
+<div id="preloader"><span class="pl-heart">♥</span></div>
+
 <canvas id="cv-main"></canvas>
 <canvas id="cv-parts"></canvas>
 <div class="vignette"></div>
- 
-<div id="ui">
-  <div class="ornament">— Pour toi —</div>
-  <div class="photo-wrap">
-    <div class="ring ring1"></div><div class="ring ring2"></div><div class="ring ring3"></div>
-    <img id="slideshow" class="photo-img" src="photo1.png" alt="Chloé">
-  </div>
-  <h1 class="name">Chloé</h1>
-  <p class="sub">Mon amour &nbsp;·&nbsp; Mon univers</p>
-  <div class="sep">
-    <div class="sep-line"></div><span class="sep-heart">♥</span><div class="sep-line r"></div>
-  </div>
-  <button class="btn-main" id="btn-main" onclick="startExp()">Ouvre ton cœur</button>
-  <button class="btn-lettre" onclick="openLettre()">Lire ma lettre ✦</button>
-</div>
- 
-<!-- Bouton messagerie -->
-<button id="btn-msg" onclick="openMsg()">
-  💌
-  <span id="msg-badge"></span>
+<div class="grain"></div>
+
+<main>
+
+  <section id="hero">
+    <div class="ornament">— Pour toi —</div>
+
+    <div class="photo-wrap" id="photo-wrap">
+      <div class="ring ring1"></div><div class="ring ring2"></div><div class="ring ring3"></div>
+      <div class="photo-stage" id="photo-stage">
+        <div class="photo-hint">✦ regarder ✦</div>
+      </div>
+    </div>
+
+    <h1 class="name">Chloé</h1>
+    <p class="sub">Mon amour &nbsp;·&nbsp; Mon univers</p>
+    <p id="together-counter"></p>
+
+    <div class="sep">
+      <div class="sep-line"></div><span class="sep-heart">♥</span><div class="sep-line r"></div>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn-main" id="btn-start">Ouvre ton cœur</button>
+      <button class="btn-lettre" data-open-letter>Lire ma lettre ✦</button>
+    </div>
+
+    <button class="scroll-cue" id="scroll-cue" aria-label="Découvrir la suite">
+      <span>Notre histoire</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+    </button>
+  </section>
+
+  <section id="story">
+    <h2 class="section-title reveal">Notre Histoire</h2>
+    <div class="section-kicker reveal">Trois instants, un même cœur</div>
+    <p class="section-lede reveal">Quelques images gardées précieusement, comme des pages qu'on relit sans jamais s'en lasser.</p>
+
+    <div class="story-frame reveal">
+      <div class="story-media"><span class="story-frame-num">01</span><img src="photo1.png" alt="Un instant tranquille ensemble" loading="lazy"></div>
+      <div class="story-copy">
+        <div class="story-kicker">Chapitre un</div>
+        <h3 class="story-title">Les instants tranquilles</h3>
+        <p class="story-text">Ceux où plus rien d'autre n'a d'importance. Juste toi, moi, et ce silence qui en dit plus que n'importe quel mot.</p>
+      </div>
+    </div>
+
+    <div class="story-frame reveal">
+      <div class="story-media"><span class="story-frame-num">02</span><img src="photo2.jpg" alt="Un moment léger et complice" loading="lazy"></div>
+      <div class="story-copy">
+        <div class="story-kicker">Chapitre deux</div>
+        <h3 class="story-title">Nos éclats de rire</h3>
+        <p class="story-text">Les moments un peu fous, ceux qu'on garde en photo pour se souvenir qu'avec toi, tout devient un jeu.</p>
+      </div>
+    </div>
+
+    <div class="story-frame reveal">
+      <div class="story-media"><span class="story-frame-num">03</span><img src="photo3.jpg" alt="Un souvenir partagé avec nos proches" loading="lazy"></div>
+      <div class="story-copy">
+        <div class="story-kicker">Chapitre trois</div>
+        <h3 class="story-title">Nos souvenirs partagés</h3>
+        <p class="story-text">Ceux qui nous entourent comptent aussi. Chaque souvenir avec toi porte un peu de tout ce qu'on aime.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="moments">
+    <h2 class="section-title reveal">Nos Petits Instants</h2>
+    <div class="section-kicker reveal">Trois secondes, en boucle, pour toujours</div>
+    <p class="section-lede reveal">Des fragments filmés sans y penser, qui aujourd'hui disent tout.</p>
+
+    <div class="video-grid reveal-scale">
+      <div class="video-tile"><video src="videos/memory-1.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="video-tile"><video src="videos/memory-2.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="video-tile"><video src="videos/memory-3.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="video-tile"><video src="videos/memory-4.mp4" muted loop playsinline preload="metadata"></video></div>
+      <div class="video-tile"><video src="videos/memory-5.mp4" muted loop playsinline preload="metadata"></video></div>
+    </div>
+  </section>
+
+  <section id="reasons">
+    <h2 class="section-title reveal">Pourquoi Toi</h2>
+    <div class="section-kicker reveal">Retourne chaque carte</div>
+    <p class="section-lede reveal">Six petites vérités, parmi tant d'autres.</p>
+
+    <div class="cards-grid reveal-scale">
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">01</div><div class="fc-label">Ton rire</div></div>
+          <div class="flip-face flip-back"><p>Ta façon de rire aux éclats pour un rien, et de rendre la journée plus légère.</p></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">02</div><div class="fc-label">Ton regard</div></div>
+          <div class="flip-face flip-back"><p>Ce regard qui dit tout, sans qu'un seul mot ne soit nécessaire.</p></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">03</div><div class="fc-label">Ta douceur</div></div>
+          <div class="flip-face flip-back"><p>Cette douceur qui rend tout plus simple, même les jours compliqués.</p></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">04</div><div class="fc-label">Ton énergie</div></div>
+          <div class="flip-face flip-back"><p>Cette énergie qui illumine une pièce entière dès que tu y entres.</p></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">05</div><div class="fc-label">Notre complicité</div></div>
+          <div class="flip-face flip-back"><p>Cette complicité qu'on ne trouve qu'une seule fois dans une vie.</p></div>
+        </div>
+      </div>
+      <div class="flip-card">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div class="fc-num">06</div><div class="fc-label">Toi, simplement</div></div>
+          <div class="flip-face flip-back"><p>Le fait que tu sois, tout simplement, toi. Rien de plus, rien de moins.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="closing">
+    <p class="closing-quote reveal">« Dans le grand désordre du monde,<br>ton existence est l'une de mes plus belles <span>certitudes</span>. »</p>
+    <button class="btn-main reveal" data-open-letter>Relire ma lettre</button>
+  </section>
+
+</main>
+
+<!-- Boutons flottants -->
+<button id="btn-msg" class="float-btn" aria-label="Ouvrir nos messages">
+  💌<span id="msg-badge"></span>
 </button>
- 
+<button id="btn-music" class="float-btn" aria-label="Activer la musique">♪</button>
+
 <!-- Overlay messagerie -->
 <div id="msg-wrap">
-  <div id="msg-bg" onclick="closeMsg()"></div>
+  <div id="msg-bg"></div>
   <div id="msg-box">
     <div id="msg-header">
       <div>
         <div id="msg-header-title">Nos mots ♥</div>
-        <div id="msg-header-sub">messages privés · persistants</div>
+        <div id="msg-header-sub">messages privés · persistants sur cet appareil</div>
       </div>
-      <button class="btn-close-msg" onclick="closeMsg()">✕ fermer</button>
+      <button class="btn-close-msg">✕ fermer</button>
     </div>
     <div id="msg-identity">
       <span id="identity-label">Connecté en tant que</span>
       <span id="identity-name">Chloé</span>
-      <button id="btn-switch-id" onclick="switchIdentity()">Changer</button>
+      <button id="btn-switch-id">Changer</button>
     </div>
     <div id="msg-list">
       <div class="msg-empty">✦<br>Vos premiers mots<br>s'écriront ici…</div>
     </div>
     <div id="msg-input-area">
-      <textarea id="msg-textarea" placeholder="Écris quelque chose…" rows="1" onkeydown="handleKey(event)"></textarea>
-      <button id="btn-send" onclick="sendMsg()">➤</button>
+      <textarea id="msg-textarea" placeholder="Écris quelque chose…" rows="1"></textarea>
+      <button id="btn-send" aria-label="Envoyer">➤</button>
     </div>
   </div>
 </div>
- 
+
 <!-- PIN overlay -->
 <div id="pin-wrap">
   <div id="pin-bg"></div>
@@ -393,380 +193,112 @@ canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-ev
       <div class="pin-dot" id="dot3"></div>
     </div>
     <div id="pin-grid">
-      <button class="pin-key" onclick="pinPress('1')">1</button>
-      <button class="pin-key" onclick="pinPress('2')">2</button>
-      <button class="pin-key" onclick="pinPress('3')">3</button>
-      <button class="pin-key" onclick="pinPress('4')">4</button>
-      <button class="pin-key" onclick="pinPress('5')">5</button>
-      <button class="pin-key" onclick="pinPress('6')">6</button>
-      <button class="pin-key" onclick="pinPress('7')">7</button>
-      <button class="pin-key" onclick="pinPress('8')">8</button>
-      <button class="pin-key" onclick="pinPress('9')">9</button>
-      <button class="pin-key" onclick="pinPress('del')" style="font-size:0.75rem;letter-spacing:0.05em">⌫</button>
-      <button class="pin-key" onclick="pinPress('0')">0</button>
-      <button class="pin-key" onclick="pinPress('ok')" style="background:rgba(123,26,58,0.5);">✓</button>
+      <button class="pin-key" data-key="1">1</button>
+      <button class="pin-key" data-key="2">2</button>
+      <button class="pin-key" data-key="3">3</button>
+      <button class="pin-key" data-key="4">4</button>
+      <button class="pin-key" data-key="5">5</button>
+      <button class="pin-key" data-key="6">6</button>
+      <button class="pin-key" data-key="7">7</button>
+      <button class="pin-key" data-key="8">8</button>
+      <button class="pin-key" data-key="9">9</button>
+      <button class="pin-key" data-key="del" style="font-size:0.75rem;letter-spacing:0.05em">⌫</button>
+      <button class="pin-key" data-key="0">0</button>
+      <button class="pin-key" data-key="ok" style="background:rgba(123,26,58,0.5);">✓</button>
     </div>
     <div id="pin-error"></div>
-    <button id="btn-pin-cancel" onclick="closePIN()">Annuler</button>
+    <button id="btn-pin-cancel">Annuler</button>
   </div>
 </div>
- 
+
 <!-- Lettre overlay -->
 <div id="lettre-wrap">
-  <div id="lettre-bg" onclick="closeLettre()"></div>
+  <div id="lettre-bg"></div>
   <div id="lettre-box">
-    <button class="btn-close" onclick="closeLettre()">✕ fermer</button>
+    <button class="btn-close">✕ fermer</button>
     <div class="l-ornament">✦ &nbsp;✦ &nbsp;✦</div>
     <div id="l-text"></div><span id="l-cursor"></span>
   </div>
 </div>
- 
+
+<!-- Carte d'anniversaire -->
+<div id="birthday-wrap">
+  <div id="birthday-bg"></div>
+  <div id="birthday-box">
+    <button class="btn-close">✕ fermer</button>
+    <div class="bday-badge"><span>18</span></div>
+    <div class="l-ornament">✦ &nbsp;✦ &nbsp;✦</div>
+    <h2 class="bday-title">Joyeux Anniversaire</h2>
+    <p class="bday-sub">Chloé &nbsp;·&nbsp; 18 ans</p>
+
+    <svg id="bday-scene" viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+      <line x1="20" y1="192" x2="580" y2="192" class="bday-ground"/>
+
+      <g class="figure figure-him">
+        <g class="hair-curly">
+          <circle cx="76" cy="88" r="5"/>
+          <circle cx="84" cy="81" r="6"/>
+          <circle cx="94" cy="79" r="6.5"/>
+          <circle cx="104" cy="82" r="6"/>
+          <circle cx="109" cy="90" r="5"/>
+          <circle cx="80" cy="94" r="4"/>
+        </g>
+        <circle class="head" cx="90" cy="96" r="14"/>
+        <line class="limb" x1="90" y1="110" x2="90" y2="148"/>
+        <line class="limb" x1="90" y1="119" x2="75" y2="137"/>
+        <line class="limb" x1="90" y1="119" x2="106" y2="134"/>
+        <line class="limb" x1="90" y1="148" x2="78" y2="191"/>
+        <line class="limb" x1="90" y1="148" x2="102" y2="191"/>
+      </g>
+
+      <g class="figure figure-her">
+        <path class="hair-long" d="M492,88 C480,110 480,148 494,168 L505,160 C497,138 498,110 506,90 Z"/>
+        <path class="hair-long" d="M528,88 C540,110 540,148 526,168 L515,160 C523,138 522,110 514,90 Z"/>
+        <path class="hair-top" d="M496,86 Q510,70 524,86"/>
+        <circle class="head" cx="510" cy="96" r="14"/>
+        <line class="limb" x1="510" y1="110" x2="510" y2="148"/>
+        <line class="limb" x1="510" y1="119" x2="525" y2="137"/>
+        <line class="limb" x1="510" y1="119" x2="494" y2="134"/>
+        <line class="limb" x1="510" y1="148" x2="522" y2="191"/>
+        <line class="limb" x1="510" y1="148" x2="498" y2="191"/>
+      </g>
+
+      <g class="kiss-heart-pulse">
+        <text class="kiss-heart" x="300" y="78" text-anchor="middle">♥</text>
+      </g>
+
+      <g class="confetti-heart" style="animation-delay:3.1s" transform="translate(255,70)"><text text-anchor="middle">♥</text></g>
+      <g class="confetti-heart" style="animation-delay:3.5s" transform="translate(345,66)"><text text-anchor="middle">♥</text></g>
+      <g class="confetti-heart" style="animation-delay:3.9s" transform="translate(272,50)"><text text-anchor="middle">✦</text></g>
+      <g class="confetti-heart" style="animation-delay:4.3s" transform="translate(328,52)"><text text-anchor="middle">✦</text></g>
+      <g class="confetti-heart" style="animation-delay:4.7s" transform="translate(300,44)"><text text-anchor="middle">♥</text></g>
+    </svg>
+
+    <p class="bday-text">Chloé,<br><br>Dix-huit ans : le premier grand chapitre d'une histoire qui ne fait que commencer.<br><br>Je me souviens d'un temps où nos chemins ne s'étaient pas encore croisés — et puis, un jour, ils se sont trouvés. Depuis, chaque pas que je fais semble aller vers toi.<br><br>Alors aujourd'hui, je voulais juste te le dire simplement :<br><br>Joyeux anniversaire, mon amour. Puisse cette nouvelle année t'apporter tout ce que tu mérites, et un peu plus encore.<br><br>Je t'aime. ♥</p>
+  </div>
+</div>
+
+<!-- Lightbox photo -->
+<div id="lightbox">
+  <div id="lightbox-bg"></div>
+  <div id="lightbox-stage">
+    <button id="lightbox-close">✕ fermer</button>
+    <button class="lightbox-nav" id="lightbox-prev" aria-label="Photo précédente">‹</button>
+    <img id="lightbox-img" src="" alt="Souvenir">
+    <button class="lightbox-nav" id="lightbox-next" aria-label="Photo suivante">›</button>
+  </div>
+</div>
+
 <div id="toast"></div>
 <audio id="music" loop preload="auto"><source src="music.mp3" type="audio/mpeg"></audio>
- 
-<script>
-(function () {
- 
-// ════════════════════════════════════════
-//  CANVAS & ANIMATION
-// ════════════════════════════════════════
-var cvMain = document.getElementById('cv-main');
-var ctx = cvMain.getContext('2d');
-var cvPt = document.getElementById('cv-parts');
-var ctxPt = cvPt.getContext('2d');
-var W = 0, H = 0;
- 
-function resize() {
-  W = window.innerWidth; H = window.innerHeight;
-  cvMain.width = W; cvMain.height = H;
-  cvPt.width = W; cvPt.height = H;
-  drawStaticBg();
-}
- 
-var stars = [];
-for (var i = 0; i < 150; i++) {
-  stars.push({ x: Math.random(), y: Math.random()*0.62, r: 0.3+Math.random()*1.4,
-    a: 0.25+Math.random()*0.75, tw: Math.random()*6.28, tws: 0.006+Math.random()*0.018,
-    col: Math.random()<0.15?'#ECC97A':Math.random()<0.2?'#F2C4D0':'#ffffff' });
-}
- 
-var meteors = [];
-function newMeteor() {
-  return { x:0.05+Math.random()*0.75, y:0.02+Math.random()*0.22, prog:0,
-    speed:0.005+Math.random()*0.004, len:0.08+Math.random()*0.08,
-    delay:4+Math.random()*10, active:false };
-}
-for (var m = 0; m < 2; m++) meteors.push(newMeteor());
- 
-var trees = [];
-for (var ti = 0; ti < 14; ti++) {
-  var side = ti<5?0:ti<10?1:2;
-  trees.push({ xr:side===0?0.02+Math.random()*0.16:side===1?0.82+Math.random()*0.16:0.18+Math.random()*0.64,
-    yr:0.72+Math.random()*0.05, hr:0.065+Math.random()*0.09, wr:0.024+Math.random()*0.018,
-    layer:side===2?1:0, sway:Math.random()*6.28, swayS:0.003+Math.random()*0.005 });
-}
- 
-function drawTree(c,x,y,h,w) {
-  c.beginPath();c.rect(x-w*0.07,y,w*0.14,h*0.28);c.fill();
-  c.beginPath();c.moveTo(x,y-h*0.52);c.lineTo(x-w*0.5,y+h*0.08);c.lineTo(x+w*0.5,y+h*0.08);c.closePath();c.fill();
-  c.beginPath();c.moveTo(x,y-h*0.76);c.lineTo(x-w*0.38,y-h*0.14);c.lineTo(x+w*0.38,y-h*0.14);c.closePath();c.fill();
-  c.beginPath();c.moveTo(x,y-h);c.lineTo(x-w*0.25,y-h*0.44);c.lineTo(x+w*0.25,y-h*0.44);c.closePath();c.fill();
-}
- 
-var cityLights = [];
-for (var ci = 0; ci < 30; ci++) {
-  cityLights.push({ xr:Math.random(), yr:0.755+Math.random()*0.045, r:0.5+Math.random()*1.4,
-    a:0.2+Math.random()*0.45, tw:Math.random()*6.28, tws:0.01+Math.random()*0.04,
-    col:Math.random()<0.4?'#ECC97A':Math.random()<0.5?'#F2C4D0':'#C8456C' });
-}
- 
-var SYMS=['♥','✦','·','◇'], COLS=['rgba(200,69,108,','rgba(212,168,83,','rgba(242,196,208,'];
-var parts=[];
-function newPart() {
-  var hrt=Math.random()<0.18;
-  return { x:Math.random()*W, y:H+20+Math.random()*50, vx:(Math.random()-0.5)*0.45, vy:-(0.32+Math.random()*0.75),
-    alpha:0.08+Math.random()*0.52, size:hrt?10+Math.random()*18:3+Math.random()*12,
-    sym:hrt?'♥':SYMS[Math.floor(Math.random()*SYMS.length)],
-    col:COLS[Math.floor(Math.random()*COLS.length)],
-    ang:Math.random()*6.28, twist:(Math.random()-0.5)*0.012,
-    drift:Math.random()*6.28, driftS:0.006+Math.random()*0.008 };
-}
-for (var pi=0;pi<45;pi++){var p=newPart();p.y=Math.random()*H;parts.push(p);}
- 
-var bgCanvas=document.createElement('canvas'), bgCtx=bgCanvas.getContext('2d');
-function drawStaticBg() {
-  bgCanvas.width=W;bgCanvas.height=H;
-  var sky=bgCtx.createLinearGradient(0,0,0,H*0.82);
-  sky.addColorStop(0,'#050108');sky.addColorStop(0.28,'#0D0412');sky.addColorStop(0.55,'#1A0820');
-  sky.addColorStop(0.75,'#2D1020');sky.addColorStop(0.9,'#3D1428');sky.addColorStop(1,'#4A1830');
-  bgCtx.fillStyle=sky;bgCtx.fillRect(0,0,W,H);
-  var hg=bgCtx.createLinearGradient(0,H*0.68,0,H*0.82);
-  hg.addColorStop(0,'rgba(123,26,58,0)');hg.addColorStop(0.5,'rgba(123,26,58,0.1)');hg.addColorStop(1,'rgba(200,69,108,0.07)');
-  bgCtx.fillStyle=hg;bgCtx.fillRect(0,H*0.68,W,H*0.15);
-  function drawMtn(yBase,color,f1,f2,seed) {
-    bgCtx.beginPath();bgCtx.moveTo(0,H);
-    for(var px=0;px<=W+6;px+=6){bgCtx.lineTo(px,yBase*H+Math.sin(px*f1+seed)*0.065*H+Math.cos(px*f2+seed*1.4)*0.02*H);}
-    bgCtx.lineTo(W,H);bgCtx.closePath();bgCtx.fillStyle=color;bgCtx.fill();
-  }
-  drawMtn(0.62,'rgba(28,7,16,0.78)',0.0024,0.0013,0.5);
-  drawMtn(0.66,'rgba(18,5,11,0.9)',0.0034,0.0018,1.2);
-  var soil=bgCtx.createLinearGradient(0,H*0.72,0,H);
-  soil.addColorStop(0,'#1A0810');soil.addColorStop(0.4,'#110508');soil.addColorStop(1,'#090305');
-  bgCtx.fillStyle=soil;bgCtx.fillRect(0,H*0.72,W,H*0.28);
-  var fg3=bgCtx.createLinearGradient(0,H*0.91,0,H);
-  fg3.addColorStop(0,'rgba(4,1,2,0)');fg3.addColorStop(1,'rgba(4,1,2,0.94)');
-  bgCtx.fillStyle=fg3;bgCtx.fillRect(0,H*0.91,W,H*0.09);
-}
- 
-var tick=0;
-function loop() {
-  tick+=0.014; var t=tick;
-  ctx.clearRect(0,0,W,H);
-  ctx.drawImage(bgCanvas,0,0);
-  for(var si=0;si<stars.length;si++){var s=stars[si];s.tw+=s.tws;ctx.globalAlpha=s.a*(0.55+Math.sin(s.tw)*0.45);ctx.fillStyle=s.col;ctx.beginPath();ctx.arc(s.x*W,s.y*H,s.r,0,6.28);ctx.fill();}
-  ctx.globalAlpha=1;
-  for(var mi=0;mi<meteors.length;mi++){var me=meteors[mi];me.delay-=0.016;if(me.delay<=0&&!me.active)me.active=true;if(me.active){me.prog+=me.speed;var alpha=me.prog<0.12?me.prog/0.12:me.prog>0.72?(1-me.prog)/0.28:1;alpha=Math.max(0,Math.min(1,alpha));var ex=me.x*W+me.prog*me.len*W,ey=me.y*H+me.prog*me.len*H*0.38,sx=ex-me.len*W*0.35,sy=ey-me.len*H*0.13;var mg=ctx.createLinearGradient(sx,sy,ex,ey);mg.addColorStop(0,'rgba(242,196,208,0)');mg.addColorStop(1,'rgba(242,196,208,'+(alpha*0.88)+')');ctx.strokeStyle=mg;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(ex,ey);ctx.stroke();if(me.prog>=1)meteors[mi]=newMeteor();}}
-  var lx=W*0.72,ly=H*0.17;
-  var lhalo=ctx.createRadialGradient(lx,ly,18,lx,ly,88);lhalo.addColorStop(0,'rgba(212,168,83,0.11)');lhalo.addColorStop(0.5,'rgba(212,168,83,0.04)');lhalo.addColorStop(1,'rgba(212,168,83,0)');ctx.fillStyle=lhalo;ctx.beginPath();ctx.arc(lx,ly,88,0,6.28);ctx.fill();
-  ctx.save();ctx.shadowColor='rgba(212,168,83,0.55)';ctx.shadowBlur=18;var lg=ctx.createRadialGradient(lx-5,ly-5,2,lx,ly,26);lg.addColorStop(0,'#FFF5DC');lg.addColorStop(0.6,'#ECC97A');lg.addColorStop(1,'#C89A3A');ctx.fillStyle=lg;ctx.beginPath();ctx.arc(lx,ly,26,0,6.28);ctx.fill();ctx.restore();
-  ctx.fillStyle='rgba(13,4,8,0.56)';ctx.beginPath();ctx.arc(lx+9,ly-3,24,0,6.28);ctx.fill();
-  var bands=[{cy:0.22,c1:'rgba(123,26,58,',c2:'rgba(165,32,80,',amp:0.05,sp:0.18},{cy:0.27,c1:'rgba(165,32,80,',c2:'rgba(200,69,108,',amp:0.04,sp:0.14}];
-  for(var bi=0;bi<bands.length;bi++){var b=bands[bi];var wave=Math.sin(t*b.sp)*b.amp*H;var cy=b.cy*H+wave;var hh=0.04*H;var al=0.04+Math.sin(t*0.38+bi)*0.015;var ag=ctx.createLinearGradient(0,cy-hh,0,cy+hh);ag.addColorStop(0,b.c1+'0)');ag.addColorStop(0.5,b.c2+al+')');ag.addColorStop(1,b.c1+'0)');ctx.fillStyle=ag;ctx.fillRect(0,cy-hh,W,hh*2);}
-  ctx.fillStyle='rgba(11,3,7,0.88)';for(var tri=0;tri<trees.length;tri++){var tr=trees[tri];if(tr.layer!==1)continue;tr.sway+=tr.swayS;ctx.save();ctx.translate(Math.sin(tr.sway)*1.5,0);drawTree(ctx,tr.xr*W,tr.yr*H,tr.hr*H,tr.wr*W);ctx.restore();}
-  var ry=H*0.775;var rg=ctx.createLinearGradient(0,ry-14,0,ry+28);rg.addColorStop(0,'rgba(123,26,58,0.16)');rg.addColorStop(0.5,'rgba(200,69,108,0.07)');rg.addColorStop(1,'rgba(13,4,8,0)');ctx.fillStyle=rg;ctx.beginPath();ctx.moveTo(0,ry);for(var rx2=0;rx2<=W;rx2+=8){ctx.lineTo(rx2,ry+Math.sin(rx2*0.014+t*0.85)*3);}ctx.lineTo(W,ry+28);ctx.lineTo(0,ry+28);ctx.closePath();ctx.fill();
-  ctx.fillStyle='rgba(6,1,3,0.97)';for(var trfi=0;trfi<trees.length;trfi++){var trf=trees[trfi];if(trf.layer!==0)continue;trf.sway+=trf.swayS;ctx.save();ctx.translate(Math.sin(trf.sway)*2,0);drawTree(ctx,trf.xr*W,trf.yr*H,trf.hr*H*1.18,trf.wr*W*1.12);ctx.restore();}
-  for(var cii=0;cii<cityLights.length;cii++){var cl=cityLights[cii];cl.tw+=cl.tws;ctx.globalAlpha=cl.a*(0.58+Math.sin(cl.tw)*0.42);ctx.fillStyle=cl.col;ctx.beginPath();ctx.arc(cl.xr*W,cl.yr*H,cl.r,0,6.28);ctx.fill();}
-  ctx.globalAlpha=1;
-  ctxPt.clearRect(0,0,W,H);
-  for(var ppi=0;ppi<parts.length;ppi++){var pp=parts[ppi];pp.drift+=pp.driftS;pp.x+=pp.vx+Math.sin(pp.drift)*0.33;pp.y+=pp.vy;pp.ang+=pp.twist;if(pp.y<-80){parts[ppi]=newPart();continue;}ctxPt.globalAlpha=pp.alpha;ctxPt.font=pp.size+'px serif';ctxPt.fillStyle=pp.col+'0.9)';ctxPt.save();ctxPt.translate(pp.x,pp.y);ctxPt.rotate(pp.ang);ctxPt.fillText(pp.sym,0,0);ctxPt.restore();}
-  ctxPt.globalAlpha=1;
-  requestAnimationFrame(loop);
-}
-resize();
-window.addEventListener('resize', resize);
-loop();
- 
-// ── Slideshow ──
-var PHOTOS=['photo1.png','photo2.jpg','photo3.jpg'],pidx=0;
-setInterval(function(){pidx=(pidx+1)%PHOTOS.length;var img=document.getElementById('slideshow');img.style.transition='opacity 0.8s ease';img.style.opacity='0';setTimeout(function(){img.src=PHOTOS[pidx];img.style.opacity='1';},800);},4500);
- 
-// ── Musique ──
-var musicOn=false;
-window.startExp=function(){var btn=document.getElementById('btn-main');btn.innerHTML='♥';btn.style.fontSize='1.5rem';btn.style.letterSpacing='0';if(musicOn)return;var mus=document.getElementById('music');mus.play().then(function(){musicOn=true;showToast('♪ Musique activée');}).catch(function(){showToast('♪ Clique encore pour la musique');btn.onclick=function(){mus.play().then(function(){musicOn=true;showToast('♪ En route ♪');});};});};
- 
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on');},3200);}
- 
-// ── Lettre ──
-var LETTRE="Chloé,\n\nOn dit que l'amour est cette étrange force qui transforme le simple en éternel. Et depuis que ton nom habite mes pensées, je comprends mieux ces mots que les poètes poursuivaient sans fin.\n\nComme l'écrivait Victor Hugo, « aimer, c'est agir » — alors je t'écris, parce que mon cœur trouve dans tes silences plus de vérité que dans mille discours.\n\nIl y a dans ton prénom une douceur qui ressemble au printemps, une lumière calme qui traverse mes jours comme un soleil après l'orage. Et si Paul Éluard disait que « la courbe de tes yeux fait le tour de mon cœur », je crois que ton sourire, lui, a trouvé le chemin du mien sans jamais se perdre.\n\nTu es cette rare présence qui rend le temps plus léger, cette évidence que l'on ne cherche pas mais que l'on reconnaît dès qu'elle apparaît.\n\nL'amour ne consiste pas à se regarder l'un l'autre, mais à regarder ensemble dans la même direction. Avec toi, j'ai l'impression que même l'horizon devient plus beau.\n\nChloé, il existe des personnes qui marquent une vie comme une phrase inoubliable dans un livre qu'on relit sans cesse. Pour moi, tu es cette phrase.\n\nEt s'il fallait résumer tout ce que je ressens en quelques mots, ce serait simplement ceci :\n\ndans le grand désordre du monde, ton existence est l'une de mes plus belles certitudes.\n\n                                                         ♥";
-var ltTO=null,ltOpen=false;
-window.openLettre=function(){if(ltOpen)return;ltOpen=true;document.getElementById('lettre-wrap').classList.add('on');var el=document.getElementById('l-text');var cur=document.getElementById('l-cursor');el.textContent='';cur.style.display='inline-block';var i=0;function type(){if(i<LETTRE.length){el.textContent+=LETTRE[i];i++;var ch=LETTRE[i-1];var d=ch==='\n'?75:'.!?,;:'.indexOf(ch)>=0?160+Math.random()*100:22+Math.random()*24;ltTO=setTimeout(type,d);}else{cur.style.display='none';}}type();};
-window.closeLettre=function(){clearTimeout(ltTO);ltOpen=false;document.getElementById('lettre-wrap').classList.remove('on');document.getElementById('l-text').textContent='';document.getElementById('l-cursor').style.display='inline-block';};
- 
-// ════════════════════════════════════════
-//  MESSAGERIE
-// ════════════════════════════════════════
- 
-var PIN_OWNER = '2008';
-var currentUser = 'Chloé'; // par défaut = elle
-var messages = [];
-var msgOpen = false;
-var lastSeenCount = 0;
- 
-// Clés de stockage
-var STORAGE_KEY = 'chloe-messages';
- 
-// Charger les messages depuis le stockage partagé
-async function loadMessages() {
-  try {
-    var result = await window.storage.get(STORAGE_KEY, true);
-    if (result && result.value) {
-      messages = JSON.parse(result.value);
-    }
-  } catch(e) {
-    messages = [];
-  }
-  renderMessages();
-  updateBadge();
-}
- 
-// Sauvegarder les messages
-async function saveMessages() {
-  try {
-    await window.storage.set(STORAGE_KEY, JSON.stringify(messages), true);
-  } catch(e) {
-    console.error('Erreur sauvegarde', e);
-  }
-}
- 
-function formatTime(ts) {
-  var d = new Date(ts);
-  var h = d.getHours(), mn = d.getMinutes();
-  return (h<10?'0':'')+h+'h'+(mn<10?'0':'')+mn;
-}
- 
-function renderMessages() {
-  var list = document.getElementById('msg-list');
-  if (messages.length === 0) {
-    list.innerHTML = '<div class="msg-empty">✦<br>Vos premiers mots<br>s\'écriront ici…</div>';
-    return;
-  }
-  list.innerHTML = '';
-  messages.forEach(function(msg) {
-    var isMe = msg.author === currentUser;
-    var bubble = document.createElement('div');
-    bubble.className = 'msg-bubble ' + (isMe ? 'me' : 'her');
-    bubble.innerHTML =
-      '<div class="msg-sender">' + msg.author + '</div>' +
-      '<div class="msg-text">' + msg.text.replace(/</g,'&lt;').replace(/\n/g,'<br>') + '</div>' +
-      '<div class="msg-time">' + formatTime(msg.ts) + '</div>';
-    list.appendChild(bubble);
-  });
-  list.scrollTop = list.scrollHeight;
-}
- 
-function updateBadge() {
-  var badge = document.getElementById('msg-badge');
-  var unread = messages.length - lastSeenCount;
-  if (!msgOpen && unread > 0) {
-    badge.style.display = 'flex';
-    badge.textContent = unread > 9 ? '9+' : unread;
-  } else {
-    badge.style.display = 'none';
-  }
-}
- 
-window.openMsg = function() {
-  msgOpen = true;
-  document.getElementById('msg-wrap').classList.add('on');
-  lastSeenCount = messages.length;
-  updateBadge();
-  renderMessages();
-  // Rafraîchir depuis le stockage
-  loadMessages().then(function() {
-    lastSeenCount = messages.length;
-    updateBadge();
-  });
-};
- 
-window.closeMsg = function() {
-  msgOpen = false;
-  lastSeenCount = messages.length;
-  document.getElementById('msg-wrap').classList.remove('on');
-  updateBadge();
-};
- 
-window.sendMsg = function() {
-  var ta = document.getElementById('msg-textarea');
-  var text = ta.value.trim();
-  if (!text) return;
-  var msg = { author: currentUser, text: text, ts: Date.now() };
-  messages.push(msg);
-  saveMessages();
-  ta.value = '';
-  ta.style.height = 'auto';
-  renderMessages();
-};
- 
-window.handleKey = function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMsg();
-  }
-  // Auto-resize textarea
-  setTimeout(function() {
-    var ta = document.getElementById('msg-textarea');
-    ta.style.height = 'auto';
-    ta.style.height = Math.min(ta.scrollHeight, 110) + 'px';
-  }, 0);
-};
- 
-// Rafraîchissement automatique toutes les 10s si ouvert
-setInterval(function() {
-  if (msgOpen) {
-    loadMessages().then(function() {
-      lastSeenCount = messages.length;
-      updateBadge();
-    });
-  } else {
-    loadMessages();
-  }
-}, 10000);
- 
-// ── Changement d'identité ──
-window.switchIdentity = function() {
-  if (currentUser !== 'Chloé') {
-    // Repasser en Chloé
-    currentUser = 'Chloé';
-    document.getElementById('identity-name').textContent = 'Chloé';
-    showToast('Connecté en tant que Chloé ♥');
-    renderMessages();
-  } else {
-    // Demander le PIN pour devenir l'expéditeur
-    openPIN();
-  }
-};
- 
-// ── PIN ──
-var pinBuffer = '';
-var pinCallback = null;
- 
-function openPIN() {
-  pinBuffer = '';
-  updatePinDots();
-  document.getElementById('pin-error').textContent = '';
-  document.getElementById('pin-wrap').classList.add('on');
-}
- 
-window.closePIN = function() {
-  pinBuffer = '';
-  updatePinDots();
-  document.getElementById('pin-wrap').classList.remove('on');
-};
- 
-function updatePinDots() {
-  for (var i = 0; i < 4; i++) {
-    var dot = document.getElementById('dot' + i);
-    dot.classList.toggle('filled', i < pinBuffer.length);
-  }
-}
- 
-window.pinPress = function(val) {
-  if (val === 'del') {
-    pinBuffer = pinBuffer.slice(0, -1);
-    updatePinDots();
-    return;
-  }
-  if (val === 'ok') {
-    checkPIN();
-    return;
-  }
-  if (pinBuffer.length >= 4) return;
-  pinBuffer += val;
-  updatePinDots();
-  if (pinBuffer.length === 4) {
-    setTimeout(checkPIN, 150);
-  }
-};
- 
-function checkPIN() {
-  if (pinBuffer === PIN_OWNER) {
-    document.getElementById('pin-wrap').classList.remove('on');
-    currentUser = 'Lui ♥';
-    document.getElementById('identity-name').textContent = 'Lui ♥';
-    showToast('Mode expéditeur activé ♥');
-    renderMessages();
-  } else {
-    document.getElementById('pin-error').textContent = 'Code incorrect';
-    pinBuffer = '';
-    updatePinDots();
-    setTimeout(function(){ document.getElementById('pin-error').textContent=''; }, 1800);
-  }
-}
- 
-// Init
-loadMessages();
- 
-})();
-</script>
+
+<script src="js/scene.js"></script>
+<script src="js/reveal.js"></script>
+<script src="js/gallery.js"></script>
+<script src="js/moments.js"></script>
+<script src="js/letter.js"></script>
+<script src="js/birthday.js"></script>
+<script src="js/messenger.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
