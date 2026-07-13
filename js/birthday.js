@@ -3,6 +3,16 @@
    ═══════════════════════════════════════════════ */
 window.Birthday = (function () {
   var ANIMATED_SELECTOR = '.figure-him, .figure-her, .kiss-heart, .kiss-heart-pulse, .confetti-heart';
+  var EARLY_CODE = '2008';
+  var EARLY_KEY = 'chloe-bday-early-unlock';
+
+  function isEarlyUnlocked() {
+    try { return window.localStorage.getItem(EARLY_KEY) === '1'; } catch (e) { return false; }
+  }
+
+  function setEarlyUnlocked() {
+    try { window.localStorage.setItem(EARLY_KEY, '1'); } catch (e) {}
+  }
 
   function replay() {
     var scene = document.getElementById('bday-scene');
@@ -25,15 +35,29 @@ window.Birthday = (function () {
     return !d || Date.now() >= d.getTime();
   }
 
-  function open() {
-    if (!isUnlocked()) {
-      var d = unlockDate();
-      var when = d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
-      window.App && window.App.toast('✦ Patience… ce secret s\'ouvre le ' + when + ' ✦');
-      return;
-    }
+  function reveal() {
     document.getElementById('birthday-wrap').classList.add('on');
     replay();
+  }
+
+  function open() {
+    if (isUnlocked() || isEarlyUnlocked()) {
+      reveal();
+      return;
+    }
+    var when = unlockDate().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+    window.Pin.request({
+      code: EARLY_CODE,
+      title: 'Un secret avant l\'heure ?',
+      sub: 'Entre le code si tu le connais',
+      onSuccess: function () {
+        setEarlyUnlocked();
+        reveal();
+      },
+      onCancel: function () {
+        window.App && window.App.toast('✦ Tu la verras le ' + when + ' ✦');
+      }
+    });
   }
 
   function close() {

@@ -9,7 +9,6 @@ window.Messenger = (function () {
   var messages = [];
   var msgOpen = false;
   var lastSeenCount = 0;
-  var pinBuffer = '';
 
   function loadMessages() {
     try {
@@ -119,50 +118,17 @@ window.Messenger = (function () {
       window.App && window.App.toast('Connecté en tant que Chloé ♥');
       renderMessages();
     } else {
-      openPIN();
-    }
-  }
-
-  function openPIN() {
-    pinBuffer = '';
-    updatePinDots();
-    document.getElementById('pin-error').textContent = '';
-    document.getElementById('pin-wrap').classList.add('on');
-  }
-
-  function closePIN() {
-    pinBuffer = '';
-    updatePinDots();
-    document.getElementById('pin-wrap').classList.remove('on');
-  }
-
-  function updatePinDots() {
-    for (var i = 0; i < 4; i++) {
-      document.getElementById('dot' + i).classList.toggle('filled', i < pinBuffer.length);
-    }
-  }
-
-  function pinPress(val) {
-    if (val === 'del') { pinBuffer = pinBuffer.slice(0, -1); updatePinDots(); return; }
-    if (val === 'ok') { checkPIN(); return; }
-    if (pinBuffer.length >= 4) return;
-    pinBuffer += val;
-    updatePinDots();
-    if (pinBuffer.length === 4) setTimeout(checkPIN, 150);
-  }
-
-  function checkPIN() {
-    if (pinBuffer === PIN_OWNER) {
-      document.getElementById('pin-wrap').classList.remove('on');
-      currentUser = 'Lui ♥';
-      document.getElementById('identity-name').textContent = 'Lui ♥';
-      window.App && window.App.toast('Mode expéditeur activé ♥');
-      renderMessages();
-    } else {
-      document.getElementById('pin-error').textContent = 'Code incorrect';
-      pinBuffer = '';
-      updatePinDots();
-      setTimeout(function () { document.getElementById('pin-error').textContent = ''; }, 1800);
+      window.Pin.request({
+        code: PIN_OWNER,
+        title: 'Code secret',
+        sub: 'Entrez votre PIN à 4 chiffres',
+        onSuccess: function () {
+          currentUser = 'Lui ♥';
+          document.getElementById('identity-name').textContent = 'Lui ♥';
+          window.App && window.App.toast('Mode expéditeur activé ♥');
+          renderMessages();
+        }
+      });
     }
   }
 
@@ -173,11 +139,6 @@ window.Messenger = (function () {
     document.getElementById('btn-send').addEventListener('click', sendMsg);
     document.getElementById('msg-textarea').addEventListener('keydown', handleKey);
     document.getElementById('btn-switch-id').addEventListener('click', switchIdentity);
-    document.getElementById('btn-pin-cancel').addEventListener('click', closePIN);
-    document.getElementById('pin-bg') && document.getElementById('pin-bg').addEventListener('click', closePIN);
-    document.querySelectorAll('.pin-key').forEach(function (key) {
-      key.addEventListener('click', function () { pinPress(key.dataset.key); });
-    });
 
     loadMessages();
     updateBadge();

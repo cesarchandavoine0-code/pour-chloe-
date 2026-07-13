@@ -134,6 +134,7 @@ window.App = (function () {
     initTogetherCounter();
     initReasonCards();
     initReveals();
+    window.Pin.init();
     window.Gallery.init();
     window.Letter.init();
     window.Birthday.init();
